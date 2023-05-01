@@ -6,6 +6,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { FavoriteModule } from './favorite/favorite.module';
+import { EventModule } from './event/event.module';
+import { NoticeModule } from './notice/notice.module';
+import { FaqModule } from './faq/faq.module';
 import * as Joi from 'joi';
 
 const typeOrmModuleOptions = {
@@ -44,6 +48,10 @@ const typeOrmModuleOptions = {
     TypeOrmModule.forRootAsync(typeOrmModuleOptions),
     AuthModule,
     UserModule,
+    FavoriteModule,
+    EventModule,
+    NoticeModule,
+    FaqModule,
   ],
   controllers: [AppController],
   providers: [AppService],
