@@ -1,4 +1,4 @@
 export type Payload = {
-  signname?: string;
+  email?: string;
   password?: string;
 };

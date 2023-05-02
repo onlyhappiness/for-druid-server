@@ -20,6 +20,10 @@
     "paths": {
       "@auth/*": ["./src/auth/*"],
       "@common/*": ["./src/common/*"],
+      "@event/*": ["./src/event/*"],
+      "@faq/*": ["./src/faq/*"],
+      "@favorite/*": ["./src/favorite/*"],
+      "@notice/*": ["./src/notice/*"],
       "@user/*": ["./src/user/*"]
     }
   }

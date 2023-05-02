@@ -19,12 +19,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: Payload) {
-    // const { signname } = payload;
-    // const user = await this.authService.findUserBySignname(signname);
-    // if (user) {
-    //   return user;
-    // } else {
-    //   throw new HttpException('Unauthorized', 401);
-    // }
+    const { email } = payload;
+    const user = await this.authService.findUserByEmail(email);
+    if (user) {
+      return user;
+    } else {
+      throw new HttpException('Unauthorized', 401);
+    }
   }
 }
