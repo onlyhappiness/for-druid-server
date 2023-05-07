@@ -1,9 +1,12 @@
+import { Community } from '@community/model/community.entity';
+import { Favorite } from '@favorite/model/favorite.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -57,4 +60,12 @@ export class Users {
   @IsNotEmpty()
   @Column()
   password: string;
+
+  // 커뮤니티
+  @OneToMany(() => Community, (community) => community.Users)
+  Community: Community;
+
+  // 찜
+  @OneToMany(() => Favorite, (favorite) => favorite.Users)
+  Favorite: Favorite;
 }

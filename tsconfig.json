@@ -19,6 +19,8 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@auth/*": ["./src/auth/*"],
+      "@category/*": ["./src/category/*"],
+      "@community/*": ["./src/community/*"],
       "@common/*": ["./src/common/*"],
       "@event/*": ["./src/event/*"],
       "@faq/*": ["./src/faq/*"],
