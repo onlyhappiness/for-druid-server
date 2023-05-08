@@ -1,4 +1,5 @@
 import { Category } from '@category/model/category.entity';
+import { Comment } from '@comment/model/comment.entity';
 import { Favorite } from '@favorite/model/favorite.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { Users } from '@user/model/user.entity';
@@ -59,11 +60,19 @@ export class Community {
   @JoinColumn()
   Category: Category;
 
+  // 유저
   @ManyToOne(() => Users, (users) => users.Community, {
     onDelete: 'SET NULL',
   })
   @JoinColumn()
   Users: Users;
+
+  // 댓글
+  @ManyToOne(() => Comment, (comment) => comment.Community, {
+    onDelete: 'SET NULL',
+  })
+  @JoinColumn()
+  Comment: Comment;
 
   // 찜
   @OneToMany(() => Favorite, (favorite) => favorite.Community)

@@ -20,6 +20,9 @@ import { CommunityModule } from './community/community.module';
 import { Category } from '@category/model/category.entity';
 import { Community } from '@community/model/community.entity';
 import { Favorite } from '@favorite/model/favorite.entity';
+import { CommentModule } from './comment/comment.module';
+import { Comment } from '@comment/model/comment.entity';
+import { InquiryModule } from './inquiry/inquiry.module';
 
 const typeOrmModuleOptions = {
   useFactory: async (
@@ -32,7 +35,16 @@ const typeOrmModuleOptions = {
     username: configService.get('DB_USERNAME'),
     password: configService.get('DB_PASSWORD'),
     database: configService.get('DB_DATABASE'),
-    entities: [Users, Category, Community, Event, Faq, Favorite, Notice],
+    entities: [
+      Users,
+      Category,
+      Comment,
+      Community,
+      Event,
+      Faq,
+      Favorite,
+      Notice,
+    ],
     synchronize: true, // ! set 'false' in production
     autoLoadEntities: true,
     logging: true,
@@ -64,6 +76,8 @@ const typeOrmModuleOptions = {
     FaqModule,
     CategoryModule,
     CommunityModule,
+    CommentModule,
+    InquiryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,3 +1,4 @@
+import { Comment } from '@comment/model/comment.entity';
 import { Community } from '@community/model/community.entity';
 import { Favorite } from '@favorite/model/favorite.entity';
 import { ApiProperty } from '@nestjs/swagger';
@@ -60,6 +61,10 @@ export class Users {
   @IsNotEmpty()
   @Column()
   password: string;
+
+  // 댓글
+  @OneToMany(() => Comment, (comment) => comment.Users)
+  Comment: Comment;
 
   // 커뮤니티
   @OneToMany(() => Community, (community) => community.Users)

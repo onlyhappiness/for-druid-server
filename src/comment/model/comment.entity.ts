@@ -5,12 +5,13 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'favorite' })
-export class Favorite {
+@Entity({ name: 'comment' })
+export class Comment {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -20,17 +21,14 @@ export class Favorite {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  // 커뮤니티
-  @ManyToOne(() => Community, (community) => community.Favorite, {
-    onDelete: 'SET NULL',
-  })
-  @JoinColumn()
-  Community: Community;
-
   // 유저
-  @ManyToOne(() => Users, (users) => users.Favorite, {
+  @ManyToOne(() => Users, (user) => user.Comment, {
     onDelete: 'SET NULL',
   })
   @JoinColumn()
   Users: Users;
+
+  // 커뮤니티
+  @OneToMany(() => Community, (community) => community.Comment)
+  Community: Community;
 }
