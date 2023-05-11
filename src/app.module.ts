@@ -36,7 +36,6 @@ const typeOrmModuleOptions = {
     password: configService.get('DB_PASSWORD'),
     database: configService.get('DB_DATABASE'),
     entities: [
-      Users,
       Category,
       Comment,
       Community,
@@ -44,6 +43,7 @@ const typeOrmModuleOptions = {
       Faq,
       Favorite,
       Notice,
+      Users,
     ],
     synchronize: true, // ! set 'false' in production
     autoLoadEntities: true,
