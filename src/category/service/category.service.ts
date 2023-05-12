@@ -18,18 +18,28 @@ export class CategoryService {
     });
 
     if (!category) {
-      throw new HttpException('해당 메뉴가 없습니다.', 400);
+      throw new HttpException('해당 카테고리가 없습니다.', 400);
     }
     return category;
   }
 
   //** 카테고리 이름 찾기 */
+  async findCategorybyName(name) {
+    const category = await this.categoryRepository.findOne({
+      where: { name },
+    });
+
+    if (category) {
+      throw new HttpException('중복된 카테고리 이름이 있습니다.', 400);
+    }
+    return category;
+  }
 
   //** 카테고리 생성 */
   async createCategory(body: CreateCategoryDTO) {
     const { name, content } = body;
 
-    // 이름 중복체크
+    await this.findCategorybyName(name);
 
     const category = await this.categoryRepository.save({
       name,
@@ -40,10 +50,22 @@ export class CategoryService {
   }
 
   //** 카테고리 보기 */
-  async findAllCategory() {
-    const category = await this.categoryRepository.find();
+  async findAllCategory(page = 1) {
+    const take = 10;
 
-    return category;
+    const [category, total] = await this.categoryRepository.findAndCount({
+      take,
+      skip: (page - 1) * take,
+    });
+
+    return {
+      data: category,
+      meta: {
+        total,
+        page,
+        last_page: Math.ceil(total / take),
+      },
+    };
   }
 
   //** 카테고리 상세 보기 */
@@ -52,6 +74,18 @@ export class CategoryService {
   }
 
   //** 카테고리 수정 */
+  async updateCategory(categoryId, body) {
+    await this.findCategorybyId(categoryId);
+
+    await this.categoryRepository.update({ id: categoryId }, body);
+    return await this.findCategorybyId(categoryId);
+  }
 
   //** 카테고리 삭제 */
+  async deleteCategory(categoryId) {
+    await this.findCategorybyId(categoryId);
+
+    await this.categoryRepository.delete({ id: categoryId });
+    return true;
+  }
 }
