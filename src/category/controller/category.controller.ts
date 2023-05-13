@@ -21,7 +21,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-@ApiTags('CATEGORY')
+@ApiTags('Category')
 @Controller('category')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
@@ -68,14 +68,14 @@ export class CategoryController {
     name: 'categoryId',
     required: true,
     description: '카테고리 아이디',
-    type: 'string',
+    type: 'number',
   })
   @ApiBody({
     type: UpdateCategoryDTO,
   })
   @Put('/:categoryId')
   async updateCategory(
-    @Param('categoryId') categoryId: string,
+    @Param('categoryId') categoryId: number,
     @Body() body: UpdateCategoryDTO,
   ) {
     return await this.categoryService.updateCategory(categoryId, body);
@@ -88,10 +88,10 @@ export class CategoryController {
     name: 'categoryId',
     required: true,
     description: '카테고리 아이디',
-    type: 'string',
+    type: 'number',
   })
   @Delete('/:categoryId')
-  async deleteCategory(@Param('categoryId') categoryId: string) {
+  async deleteCategory(@Param('categoryId') categoryId: number) {
     return await this.categoryService.deleteCategory(categoryId);
   }
 }
