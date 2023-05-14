@@ -68,10 +68,7 @@ export class Community {
   Users: Users;
 
   // 댓글
-  @ManyToOne(() => Comment, (comment) => comment.Community, {
-    onDelete: 'SET NULL',
-  })
-  @JoinColumn()
+  @OneToMany(() => Comment, (comment) => comment.Community)
   Comment: Comment;
 
   // 찜

@@ -29,6 +29,9 @@ export class Comment {
   Users: Users;
 
   // 커뮤니티
-  @OneToMany(() => Community, (community) => community.Comment)
+  @ManyToOne(() => Community, (community) => community.Comment, {
+    onDelete: 'SET NULL',
+  })
+  @JoinColumn()
   Community: Community;
 }
