@@ -48,9 +48,11 @@ export class Community {
     example: '이미지',
     description: '이미지',
   })
-  @IsString()
-  @IsNotEmpty()
-  @Column()
+  // @IsString()
+  // @IsNotEmpty()
+  @Column({
+    nullable: true,
+  })
   image: string;
 
   // 카테고리
