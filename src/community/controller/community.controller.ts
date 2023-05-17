@@ -1,6 +1,7 @@
 import { JwtAuthGuard } from '@auth/jwt/jwt.guard';
 import { CurrentUser } from '@common/decorators/user.decorator';
 import { CreateCommunityDTO } from '@community/dto/create.community.dto';
+import { UpdateCommunityDTO } from '@community/dto/update.community.dto';
 import { CommunityService } from '@community/service/community.service';
 import {
   Body,
@@ -8,6 +9,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -64,6 +66,27 @@ export class CommunityController {
   }
 
   // 커뮤니티 수정
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: '커뮤니티 수정' })
+  @ApiParam({
+    name: 'communityId',
+    required: true,
+    description: '커뮤니티 아이디',
+    type: 'number',
+  })
+  @Put('/:communityId')
+  async updateCommunity(
+    @Param('communityId') communityId: number,
+    @CurrentUser() currentUser: Users,
+    @Body() body: UpdateCommunityDTO,
+  ) {
+    return await this.communityService.updateCommunity(
+      communityId,
+      currentUser,
+      body,
+    );
+  }
 
   // 커뮤니티 삭제
 }

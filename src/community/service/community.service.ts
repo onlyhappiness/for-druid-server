@@ -1,4 +1,7 @@
+import { AuthService } from '@auth/service/auth.service';
+import { CategoryService } from '@category/service/category.service';
 import { CreateCommunityDTO } from '@community/dto/create.community.dto';
+import { UpdateCommunityDTO } from '@community/dto/update.community.dto';
 import { Community } from '@community/model/community.entity';
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,12 +14,26 @@ export class CommunityService {
   constructor(
     @InjectRepository(Community)
     private readonly communityRepository: Repository<Community>,
+    private readonly authService: AuthService,
+    private readonly categoryService: CategoryService,
   ) {}
+
+  //** 커뮤니티 작성자 확인 */
+  async findCommunityByUser(communityId, userId) {
+    const community = await this.communityRepository.findOne({
+      where: { id: communityId, Users: userId },
+    });
+    if (!community) {
+      throw new HttpException('존재하지 않는 게시글입니다.', 400);
+    }
+    return community;
+  }
 
   //** 커뮤니티 아이디로 찾기 */
   async findCommunityById(communityId) {
     const community = await this.communityRepository.findOne({
       where: { id: communityId },
+      relations: ['Users', 'Category'],
     });
 
     if (!community) {
@@ -52,20 +69,49 @@ export class CommunityService {
   //** 커뮤니티 생성 */
   async createCommunity(user: Users, body: CreateCommunityDTO) {
     const { id: userId } = user;
-
     const { categoryId } = body;
 
-    // 유저 찾기
-    // 카테고리 찾기
+    await this.authService.findUserById(userId);
+    await this.categoryService.findCategorybyId(categoryId);
 
     const communityInfo = {
       Users: userId,
       Category: categoryId,
       ...body,
     };
+
     const createCommunity = plainToInstance(Community, communityInfo);
     const community = await this.communityRepository.save(createCommunity);
-
     return community;
+  }
+
+  //** 커뮤니티 수정 */
+  async updateCommunity(
+    communityId: number,
+    currentUser: Users,
+    body: UpdateCommunityDTO,
+  ) {
+    const { id: userId } = currentUser;
+    const { categoryId, title, content, image } = body;
+
+    await this.findCommunityByUser(communityId, userId);
+    await this.categoryService.findCategorybyId(categoryId);
+
+    const communityInfo = {
+      Users: userId,
+      Category: categoryId,
+      title,
+      content,
+      image,
+    };
+
+    const updateCommunity = plainToInstance(Community, communityInfo);
+    await this.communityRepository.update({ id: communityId }, updateCommunity);
+    return await this.findCommunity(communityId);
+  }
+
+  //** 커뮤니티 삭제 */
+  async deleteCommunity() {
+    return '커뮤니티 삭제';
   }
 }

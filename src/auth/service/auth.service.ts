@@ -19,6 +19,17 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
+  //** 사용자 id로 사용자 찾기  */
+  async findUserById(userId: number) {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+    });
+    if (!user) {
+      throw new HttpException('해당 유저는 존재하지 않습니다.', 400);
+    }
+    return user;
+  }
+
   //** 사용자 이메일로 찾기 */
   async findUserByEmail(email: string) {
     const user = await this.userRepository.findOne({
