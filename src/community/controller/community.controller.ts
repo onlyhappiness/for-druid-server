@@ -6,6 +6,7 @@ import { CommunityService } from '@community/service/community.service';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -89,4 +90,23 @@ export class CommunityController {
   }
 
   // 커뮤니티 삭제
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: '커뮤니티 삭제' })
+  @ApiParam({
+    name: 'communityId',
+    required: true,
+    description: '커뮤니티 아이디',
+    type: 'number',
+  })
+  @Delete('/:communityId')
+  async deleteCommunity(
+    @Param('communityId') communityId: number,
+    @CurrentUser() currentUser: Users,
+  ) {
+    return await this.communityService.deleteCommunity(
+      communityId,
+      currentUser,
+    );
+  }
 }

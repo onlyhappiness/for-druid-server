@@ -21,10 +21,15 @@ export class CommunityService {
   //** 커뮤니티 작성자 확인 */
   async findCommunityByUser(communityId, userId) {
     const community = await this.communityRepository.findOne({
-      where: { id: communityId, Users: userId },
+      relations: ['Users'],
+      where: { id: communityId, Users: { id: userId } },
     });
+
+    console.log('아니 님: ', userId);
+    console.log('아니 에바임: ', community);
+
     if (!community) {
-      throw new HttpException('존재하지 않는 게시글입니다.', 400);
+      throw new HttpException('해당 게시글의 작성자가 아닙니다.', 400);
     }
     return community;
   }
@@ -91,6 +96,8 @@ export class CommunityService {
     currentUser: Users,
     body: UpdateCommunityDTO,
   ) {
+    console.log('ndalkndlandland: ', communityId);
+
     const { id: userId } = currentUser;
     const { categoryId, title, content, image } = body;
 
@@ -111,7 +118,14 @@ export class CommunityService {
   }
 
   //** 커뮤니티 삭제 */
-  async deleteCommunity() {
-    return '커뮤니티 삭제';
+  async deleteCommunity(communityId: number, currentUser: Users) {
+    // console.log('dsalkhdklnasdnal::::: ', communityId);
+    const { id: userId } = currentUser;
+
+    await this.findCommunityByUser(communityId, userId);
+
+    await this.communityRepository.delete({ id: communityId });
+
+    return true;
   }
 }
