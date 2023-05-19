@@ -25,9 +25,6 @@ export class CommunityService {
       where: { id: communityId, Users: { id: userId } },
     });
 
-    console.log('아니 님: ', userId);
-    console.log('아니 에바임: ', community);
-
     if (!community) {
       throw new HttpException('해당 게시글의 작성자가 아닙니다.', 400);
     }
