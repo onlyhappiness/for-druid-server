@@ -66,7 +66,6 @@ export class CommunityController {
     return await this.communityService.createCommunity(currentUser, body);
   }
 
-  // 커뮤니티 수정
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '커뮤니티 수정' })
@@ -89,7 +88,6 @@ export class CommunityController {
     );
   }
 
-  // 커뮤니티 삭제
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '커뮤니티 삭제' })

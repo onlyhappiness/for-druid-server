@@ -116,7 +116,9 @@ export class CommunityService {
 
   //** 커뮤니티 삭제 */
   async deleteCommunity(communityId: number, currentUser: Users) {
-    // console.log('dsalkhdklnasdnal::::: ', communityId);
+    // NOTE: NOTE
+    // FIXME: FIXME
+    // TODO: TODO
     const { id: userId } = currentUser;
 
     await this.findCommunityByUser(communityId, userId);
