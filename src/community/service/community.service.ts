@@ -93,8 +93,6 @@ export class CommunityService {
     currentUser: Users,
     body: UpdateCommunityDTO,
   ) {
-    console.log('ndalkndlandland: ', communityId);
-
     const { id: userId } = currentUser;
     const { categoryId, title, content, image } = body;
 
@@ -116,9 +114,6 @@ export class CommunityService {
 
   //** 커뮤니티 삭제 */
   async deleteCommunity(communityId: number, currentUser: Users) {
-    // NOTE: NOTE
-    // FIXME: FIXME
-    // TODO: TODO
     const { id: userId } = currentUser;
 
     await this.findCommunityByUser(communityId, userId);

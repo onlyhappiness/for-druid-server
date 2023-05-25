@@ -18,6 +18,7 @@ import {
   ApiBody,
   ApiOperation,
   ApiParam,
+  ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 
@@ -27,7 +28,7 @@ export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @ApiOperation({ summary: '카테고리 보기' })
-  @ApiParam({
+  @ApiQuery({
     name: 'page',
     required: true,
     description: '요청할 페이지',
@@ -43,7 +44,7 @@ export class CategoryController {
     name: 'categoryId',
     required: true,
     description: '카테고리 아이디',
-    type: 'string',
+    type: 'number',
   })
   @Get('/:categoryId')
   async findCategory(@Param('categoryId') categoryId: number) {

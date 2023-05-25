@@ -1,6 +1,9 @@
 import { Community } from '@community/model/community.entity';
+import { ApiProperty } from '@nestjs/swagger';
 import { Users } from '@user/model/user.entity';
+import { IsNotEmpty, IsString } from 'class-validator';
 import {
+  Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
@@ -20,6 +23,15 @@ export class Comment {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ApiProperty({
+    example: '내용',
+    description: '내용',
+  })
+  @IsString()
+  @IsNotEmpty()
+  @Column()
+  content: string;
 
   // 유저
   @ManyToOne(() => Users, (user) => user.Comment, {

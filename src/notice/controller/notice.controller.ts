@@ -15,6 +15,7 @@ import {
   ApiBody,
   ApiOperation,
   ApiParam,
+  ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 import { CreateNoticeDTO } from '@notice/dto/create.notice.dto';
@@ -27,7 +28,7 @@ export class NoticeController {
   constructor(private readonly noticeService: NoticeService) {}
 
   @ApiOperation({ summary: '공지사항 보기' })
-  @ApiParam({
+  @ApiQuery({
     name: 'page',
     required: true,
     description: '요청할 페이지',
@@ -43,7 +44,7 @@ export class NoticeController {
     name: 'noticeId',
     required: true,
     description: '공지사항 아이디',
-    type: 'string',
+    type: 'number',
   })
   @Get('/:noticeId')
   async findNotice(@Param('noticeId') noticeId: number) {

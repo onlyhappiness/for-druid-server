@@ -19,6 +19,7 @@ import {
   ApiBody,
   ApiOperation,
   ApiParam,
+  ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 import { Users } from '@user/model/user.entity';
@@ -29,7 +30,7 @@ export class CommunityController {
   constructor(private readonly communityService: CommunityService) {}
 
   @ApiOperation({ summary: '커뮤니티 보기' })
-  @ApiParam({
+  @ApiQuery({
     name: 'page',
     required: true,
     description: '요청할 페이지',
