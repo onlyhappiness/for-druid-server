@@ -25,15 +25,15 @@ import { Users } from '@user/model/user.entity';
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
-  @ApiParam({
+  @ApiQuery({
     name: 'communityId',
     required: true,
     description: '커뮤니티 아이디',
     type: 'number',
   })
   @ApiOperation({ summary: '댓글 보기' })
-  @Get('/:communityId')
-  async findComment(@Param('communityId') communityId: number) {
+  @Get()
+  async findComment(@Query('communityId') communityId: number) {
     return await this.commentService.findComment(communityId);
   }
 
@@ -76,9 +76,20 @@ export class CommentController {
     return await this.commentService.updateComment(commentId, body);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '댓글 삭제' })
-  @Delete()
-  async deleteComment() {
-    return '댓글 삭제';
+  @ApiParam({
+    name: 'commentId',
+    required: true,
+    description: '댓글 아이디',
+    type: 'number',
+  })
+  @Delete('/:commentId')
+  async deleteComment(
+    @Param('commentId') commentId: number,
+    @CurrentUser() currentUser: Users,
+  ) {
+    return await this.commentService.deleteComment(commentId, currentUser);
   }
 }

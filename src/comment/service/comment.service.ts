@@ -65,9 +65,6 @@ export class CommentService {
 
   //** 댓글 수정 */
   async updateComment(commentId: number, body) {
-    console.log('commentId: ', commentId);
-    console.log('body: ', body);
-
     await this.findCommentById(commentId);
 
     const commentInfo = {
@@ -79,7 +76,15 @@ export class CommentService {
   }
 
   //** 댓글 삭제 */
-  async deleteComment() {
-    return '댓글 삭제';
+  async deleteComment(commentId: number, currentUser: Users) {
+    console.log('commentId: ', commentId);
+    console.log('currentUser:', currentUser);
+
+    // TODO: 관리자 전용과 사용자 전용으로 분리해야 함
+    await this.findCommentById(commentId);
+
+    await this.CommentRepository.delete({ id: commentId });
+
+    return true;
   }
 }
