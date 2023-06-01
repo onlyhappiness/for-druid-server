@@ -26,6 +26,7 @@
       "@event/*": ["./src/event/*"],
       "@faq/*": ["./src/faq/*"],
       "@favorite/*": ["./src/favorite/*"],
+      "@inquiry/*": ["./src/inquiry/*"],
       "@notice/*": ["./src/notice/*"],
       "@user/*": ["./src/user/*"]
     }

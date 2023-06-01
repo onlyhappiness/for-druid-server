@@ -3,6 +3,7 @@ import { Community } from '@community/model/community.entity';
 import { Favorite } from '@favorite/model/favorite.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { Inquiry } from 'src/inquiry/model/inquiry.entity';
 import {
   Column,
   CreateDateColumn,
@@ -73,4 +74,8 @@ export class Users {
   // 찜
   @OneToMany(() => Favorite, (favorite) => favorite.Users)
   Favorite: Favorite;
+
+  // 문의
+  @OneToMany(() => Inquiry, (inquiry) => inquiry.Users)
+  Inquiry: Inquiry;
 }

@@ -1,5 +1,4 @@
-import { Community } from '@community/model/community.entity';
-import { Inquiry } from '@inquiry/model/inquiry.entity';
+import { Comment } from '@comment/model/comment.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { Users } from '@user/model/user.entity';
 import { IsNotEmpty, IsString } from 'class-validator';
@@ -9,13 +8,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'comment' })
-export class Comment {
+@Entity({ name: 'inquiry' })
+export class Inquiry {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -24,6 +22,15 @@ export class Comment {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ApiProperty({
+    example: '제목',
+    description: '제목',
+  })
+  @IsString()
+  @IsNotEmpty()
+  @Column()
+  title: string;
 
   @ApiProperty({
     example: '내용',
@@ -35,20 +42,16 @@ export class Comment {
   content: string;
 
   // 유저
-  @ManyToOne(() => Users, (user) => user.Comment, {
+  @ManyToOne(() => Users, (users) => users.Inquiry, {
     onDelete: 'SET NULL',
   })
   @JoinColumn()
   Users: Users;
 
-  // 커뮤니티
-  @ManyToOne(() => Community, (community) => community.Comment, {
+  // 댓글
+  @ManyToOne(() => Comment, (comment) => comment.Inquiry, {
     onDelete: 'SET NULL',
   })
   @JoinColumn()
-  Community: Community;
-
-  // 문의
-  @OneToMany(() => Inquiry, (inquiry) => inquiry.Comment)
-  Inquiry: Inquiry;
+  Comment: Comment;
 }
