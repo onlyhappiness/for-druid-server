@@ -10,18 +10,18 @@ export class FavoriteController {
   @ApiOperation({ summary: '찜한 커뮤니티 보기' })
   @Get()
   async findFavorite() {
-    return '찜한 커뮤니티 보기';
+    return this.favoriteService.findAllFavorite();
   }
 
   @ApiOperation({ summary: '찜하기' })
   @Post()
   async createFavorite() {
-    return '찜하기';
+    return this.favoriteService.createFavorite();
   }
 
   @ApiOperation({ summary: '찜한 커뮤니티 삭제' })
   @Delete()
   async deleteFavorite() {
-    return '찜한 커뮤니티 삭제';
+    return this.favoriteService.deleteFavorite();
   }
 }
