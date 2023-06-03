@@ -23,6 +23,7 @@ import { Favorite } from '@favorite/model/favorite.entity';
 import { CommentModule } from './comment/comment.module';
 import { Comment } from '@comment/model/comment.entity';
 import { InquiryModule } from './inquiry/inquiry.module';
+import { Inquiry } from '@inquiry/model/inquiry.entity';
 
 const typeOrmModuleOptions = {
   useFactory: async (
@@ -42,6 +43,7 @@ const typeOrmModuleOptions = {
       Event,
       Faq,
       Favorite,
+      Inquiry,
       Notice,
       Users,
     ],
