@@ -19,8 +19,8 @@ export class FavoriteService {
 
   //** 찜 유저 찾기 */
   async findFavoriteByUser(favoriteId, userId) {
-    console.log('favoriteId: ', favoriteId);
-    console.log('userId: ', userId);
+    // console.log('favoriteId: ', favoriteId);
+    // console.log('userId: ', userId);
 
     const favorite = await this.FavoriteRepository.findOne({
       relations: ['Users'],
@@ -34,13 +34,23 @@ export class FavoriteService {
   }
 
   //** 찜 아이디로 찜 찾기 */
-  async findFavoriteById(favoriteId) {
-    return '찜 찾기';
-  }
+  // async findFavoriteById(favoriteId) {
+  //   return '찜 찾기';
+  // }
 
   //** 찜한 목록 보기 */
-  async findAllFavorite() {
-    return '찜한 목록 찾기';
+  async findAllFavorite(currentUser) {
+    const { id: userId } = currentUser;
+
+    const favorite = await this.FavoriteRepository.find({
+      relations: ['Users'],
+      where: { Users: { id: userId } },
+    });
+
+    if (!favorite) {
+      throw new HttpException('존재하지 않는 게시글입니다.', 400);
+    }
+    return favorite;
   }
 
   //** 찜하기 */

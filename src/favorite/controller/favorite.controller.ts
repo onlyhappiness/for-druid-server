@@ -19,10 +19,12 @@ import { Users } from '@user/model/user.entity';
 export class FavoriteController {
   constructor(private readonly favoriteService: FavoriteService) {}
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '찜한 커뮤니티 보기' })
   @Get()
-  async findFavorite() {
-    return this.favoriteService.findAllFavorite();
+  async findFavorite(@CurrentUser() currentUser: Users) {
+    return this.favoriteService.findAllFavorite(currentUser);
   }
 
   @ApiBearerAuth()
