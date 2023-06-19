@@ -51,6 +51,7 @@ export class CommunityService {
     const [category, total] = await this.communityRepository.findAndCount({
       take,
       skip: (page - 1) * take,
+      relations: ['Users'],
     });
 
     return {

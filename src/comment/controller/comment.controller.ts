@@ -18,9 +18,11 @@ import {
   ApiOperation,
   ApiParam,
   ApiQuery,
+  ApiTags,
 } from '@nestjs/swagger';
 import { Users } from '@user/model/user.entity';
 
+@ApiTags('Comment')
 @Controller('comment')
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}

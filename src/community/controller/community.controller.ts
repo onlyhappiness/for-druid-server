@@ -24,7 +24,7 @@ import {
 } from '@nestjs/swagger';
 import { Users } from '@user/model/user.entity';
 
-@ApiTags('Menu')
+@ApiTags('Community')
 @Controller('community')
 export class CommunityController {
   constructor(private readonly communityService: CommunityService) {}

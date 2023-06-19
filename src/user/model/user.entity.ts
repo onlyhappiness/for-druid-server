@@ -60,7 +60,7 @@ export class Users {
   })
   @IsString()
   @IsNotEmpty()
-  @Column()
+  @Column({ select: false })
   password: string;
 
   // 댓글
