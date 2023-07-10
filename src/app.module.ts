@@ -24,6 +24,7 @@ import { CommentModule } from './comment/comment.module';
 import { Comment } from '@comment/model/comment.entity';
 import { InquiryModule } from './inquiry/inquiry.module';
 import { Inquiry } from '@inquiry/model/inquiry.entity';
+import { S3Module } from './s3/s3.module';
 
 const typeOrmModuleOptions = {
   useFactory: async (
@@ -80,6 +81,7 @@ const typeOrmModuleOptions = {
     CommunityModule,
     CommentModule,
     InquiryModule,
+    S3Module,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -11,7 +11,7 @@ export class CategoryService {
     private readonly categoryRepository: Repository<Category>,
   ) {}
 
-  //** 카테고리 아이디로 찾기 */
+  /** 카테고리 아이디로 찾기 */
   async findCategorybyId(categoryId) {
     const category = await this.categoryRepository.findOne({
       where: { id: categoryId },
@@ -23,7 +23,7 @@ export class CategoryService {
     return category;
   }
 
-  //** 카테고리 이름 찾기 */
+  /** 카테고리 이름 찾기 */
   async findCategorybyName(name) {
     const category = await this.categoryRepository.findOne({
       where: { name },
@@ -35,7 +35,7 @@ export class CategoryService {
     return category;
   }
 
-  //** 카테고리 생성 */
+  /** 카테고리 생성 */
   async createCategory(body: CreateCategoryDTO) {
     const { name, content } = body;
 
@@ -49,7 +49,7 @@ export class CategoryService {
     return category;
   }
 
-  //** 카테고리 보기 */
+  /** 카테고리 보기 */
   async findAllCategory(page = 1) {
     const take = 10;
 
@@ -68,12 +68,12 @@ export class CategoryService {
     };
   }
 
-  //** 카테고리 상세 보기 */
+  /** 카테고리 상세 보기 */
   async findCategory(categoryId) {
     return await this.findCategorybyId(categoryId);
   }
 
-  //** 카테고리 수정 */
+  /** 카테고리 수정 */
   async updateCategory(categoryId, body) {
     await this.findCategorybyId(categoryId);
 
@@ -81,7 +81,7 @@ export class CategoryService {
     return await this.findCategorybyId(categoryId);
   }
 
-  //** 카테고리 삭제 */
+  /** 카테고리 삭제 */
   async deleteCategory(categoryId) {
     await this.findCategorybyId(categoryId);
 

@@ -18,7 +18,7 @@ export class CommunityService {
     private readonly categoryService: CategoryService,
   ) {}
 
-  //** 커뮤니티 작성자 확인 */
+  /** 커뮤니티 작성자 확인 */
   async findCommunityByUser(communityId, userId) {
     const community = await this.communityRepository.findOne({
       relations: ['Users'],
@@ -31,7 +31,7 @@ export class CommunityService {
     return community;
   }
 
-  //** 커뮤니티 아이디로 찾기 */
+  /** 커뮤니티 아이디로 찾기 */
   async findCommunityById(communityId) {
     const community = await this.communityRepository.findOne({
       where: { id: communityId },
@@ -44,7 +44,7 @@ export class CommunityService {
     return community;
   }
 
-  //** 커뮤니티 전체보기 */
+  /** 커뮤니티 전체보기 */
   async findAllCommunity(page = 1) {
     const take = 10;
 
@@ -64,12 +64,12 @@ export class CommunityService {
     };
   }
 
-  //** 커뮤니티 상세 */
+  /** 커뮤니티 상세 */
   async findCommunity(communityId: number) {
     return await this.findCommunityById(communityId);
   }
 
-  //** 커뮤니티 생성 */
+  /** 커뮤니티 생성 */
   async createCommunity(user: Users, body: CreateCommunityDTO) {
     const { id: userId } = user;
     const { categoryId } = body;
@@ -88,7 +88,7 @@ export class CommunityService {
     return community;
   }
 
-  //** 커뮤니티 수정 */
+  /** 커뮤니티 수정 */
   async updateCommunity(
     communityId: number,
     currentUser: Users,
@@ -113,7 +113,7 @@ export class CommunityService {
     return await this.findCommunity(communityId);
   }
 
-  //** 커뮤니티 삭제 */
+  /** 커뮤니티 삭제 */
   async deleteCommunity(communityId: number, currentUser: Users) {
     const { id: userId } = currentUser;
 

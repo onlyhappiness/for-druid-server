@@ -1,7 +1,7 @@
 import { UserLoginDTO } from '@auth/dto/user.login.dto';
 import { UserRegisterDTO } from '@auth/dto/user.register.dto';
 import { AuthService } from '@auth/service/auth.service';
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiBody, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('AUTH')
@@ -28,5 +28,14 @@ export class AuthController {
   @Post('/login')
   async login(@Body() body: UserLoginDTO) {
     return this.authService.login(body);
+  }
+
+  @ApiOperation({ summary: '로그인 유저 정보' })
+  @ApiOkResponse({
+    description: '성공',
+  })
+  @Get()
+  async loginUser() {
+    return '로그인한 유저';
   }
 }

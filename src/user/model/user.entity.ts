@@ -24,7 +24,6 @@ export class Users {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  // 이름
   @ApiProperty({
     example: '빵입니다',
     description: '이름',
@@ -43,7 +42,6 @@ export class Users {
   @Column()
   nickname: string;
 
-  // 이메일
   @ApiProperty({
     example: 'bread11@gmail.com',
     description: '이메일',
@@ -53,7 +51,15 @@ export class Users {
   @Column()
   email: string;
 
-  // 비밀번호
+  @ApiProperty({
+    example: '01012345678',
+    description: '전화번호',
+  })
+  @IsString()
+  @IsNotEmpty()
+  @Column()
+  phone: string;
+
   @ApiProperty({
     example: 'test1234!',
     description: '비밀번호',

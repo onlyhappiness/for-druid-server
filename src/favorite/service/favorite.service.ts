@@ -17,7 +17,7 @@ export class FavoriteService {
     private readonly communityService: CommunityService,
   ) {}
 
-  //** 찜 유저 찾기 */
+  /** 찜 유저 찾기 */
   async findFavoriteByUser(favoriteId, userId) {
     // console.log('favoriteId: ', favoriteId);
     // console.log('userId: ', userId);
@@ -33,12 +33,12 @@ export class FavoriteService {
     return favorite;
   }
 
-  //** 찜 아이디로 찜 찾기 */
+  /** 찜 아이디로 찜 찾기 */
   // async findFavoriteById(favoriteId) {
   //   return '찜 찾기';
   // }
 
-  //** 찜한 목록 보기 */
+  /** 찜한 목록 보기 */
   async findAllFavorite(currentUser) {
     const { id: userId } = currentUser;
 
@@ -53,7 +53,7 @@ export class FavoriteService {
     return favorite;
   }
 
-  //** 찜하기 */
+  /** 찜하기 */
   async createFavorite(currentUser: Users, body: CreateFavoriteDTO) {
     const { id: userId } = currentUser;
     const { communityId } = body;
@@ -71,7 +71,7 @@ export class FavoriteService {
     return favorite;
   }
 
-  //** 찜 삭제 */
+  /** 찜 삭제 */
   async deleteFavorite(favoriteId, currentUser) {
     const { id: userId } = currentUser;
     await this.findFavoriteByUser(favoriteId, userId);

@@ -17,7 +17,7 @@ export class CommentService {
     private readonly communityService: CommunityService,
   ) {}
 
-  //** 댓글 아이디로 댓글 찾기 */
+  /** 댓글 아이디로 댓글 찾기 */
   async findCommentById(commentId) {
     const comment = await this.CommentRepository.findOne({
       relations: ['Users', 'Community'],
@@ -30,7 +30,7 @@ export class CommentService {
     return comment;
   }
 
-  //** 댓글 보기 */
+  /** 댓글 보기 */
   async findComment(communityId: number) {
     const comment = await this.CommentRepository.find({
       relations: ['Community'],
@@ -43,7 +43,7 @@ export class CommentService {
     return comment;
   }
 
-  //** 댓글 작성 */
+  /** 댓글 작성 */
   async createComment(
     communityId: number,
     currentUser: Users,
@@ -63,7 +63,7 @@ export class CommentService {
     return comment;
   }
 
-  //** 댓글 수정 */
+  /** 댓글 수정 */
   async updateComment(commentId: number, body) {
     await this.findCommentById(commentId);
 
@@ -75,7 +75,7 @@ export class CommentService {
     return await this.findCommentById(commentId);
   }
 
-  //** 댓글 삭제 */
+  /** 댓글 삭제 */
   async deleteComment(commentId: number, currentUser: Users) {
     console.log('commentId: ', commentId);
     console.log('currentUser:', currentUser);

@@ -19,7 +19,11 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  //** 사용자 id로 사용자 찾기  */
+  /**
+   * @description
+   * 사용자 id로 사용자 찾기
+   * userId를 param으로 받아서 어떤 유저인지 반환합니다.
+   */
   async findUserById(userId: number) {
     const user = await this.userRepository.findOne({
       where: { id: userId },
@@ -30,7 +34,11 @@ export class AuthService {
     return user;
   }
 
-  //** 사용자 이메일로 찾기 */
+  /**
+   * @description
+   * 사용자 이메일로 찾기
+   * 이메일을 param으로 받아 이메일에 해당하는 유저를 반환합니다.
+   */
   async findUserByEmail(email: string) {
     const user = await this.userRepository.findOne({
       where: { email },
@@ -42,9 +50,12 @@ export class AuthService {
     return user;
   }
 
-  //** 회원가입 */
+  /**
+   * @description
+   * 회원가입
+   */
   async createUser(body: UserRegisterDTO) {
-    const { email, nickname, password } = body;
+    const { email, phone, nickname, password } = body;
 
     // 이메일 중복 체크
     const duplicateEmail = await this.userRepository.findOne({
@@ -73,7 +84,7 @@ export class AuthService {
     return withoutPassword;
   }
 
-  //** 로그인 */
+  /** 로그인 */
   async login(body: UserLoginDTO) {
     const { email, password } = body;
 

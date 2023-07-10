@@ -12,7 +12,7 @@ export class NoticeService {
     private readonly noticeRepository: Repository<Notice>,
   ) {}
 
-  //** 공지사항 아이디로 찾기 */
+  /** 공지사항 아이디로 찾기 */
   async findNoticeById(noticeId: number) {
     const notice = await this.noticeRepository.findOne({
       where: { id: noticeId },
@@ -24,7 +24,7 @@ export class NoticeService {
     return notice;
   }
 
-  //** 공지사항 전체보기 */
+  /** 공지사항 전체보기 */
   async findAllNotice(page = 1) {
     const take = 10;
 
@@ -43,12 +43,12 @@ export class NoticeService {
     };
   }
 
-  //** 공지사항 상세 */
+  /** 공지사항 상세 */
   async findNotice(noticeId: number) {
     return await this.findNoticeById(noticeId);
   }
 
-  //** 공지사항 생성 */
+  /** 공지사항 생성 */
   async createNotice(body: CreateNoticeDTO) {
     // const { title, content } = body;
 
@@ -57,7 +57,7 @@ export class NoticeService {
     return notice;
   }
 
-  //** 공지사항 수정 */
+  /** 공지사항 수정 */
   async updateNotice(noticeId: number, body: UpdateNoticeDTO) {
     await this.findNoticeById(noticeId);
 
@@ -65,7 +65,7 @@ export class NoticeService {
     return await this.findNoticeById(noticeId);
   }
 
-  //** 공지사항 삭제 */
+  /** 공지사항 삭제 */
   async delteNotice(noticeId) {
     await this.findNoticeById(noticeId);
 
