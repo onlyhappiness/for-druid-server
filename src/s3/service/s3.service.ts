@@ -34,4 +34,19 @@ export class S3Service {
       throw new InternalServerErrorException('S3 업로드 실패');
     }
   }
+
+  async uploadFiles(images) {
+    console.log('images: ', images);
+
+    const urls = [];
+
+    await Promise.all(
+      images.map(async (image) => {
+        const url = await this.uploadFile(image);
+        urls.push(url);
+      }),
+    );
+
+    return urls;
+  }
 }
