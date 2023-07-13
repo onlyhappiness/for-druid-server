@@ -82,7 +82,6 @@ export class CommunityService {
       Category: categoryId,
       ...body,
     };
-
     const createCommunity = plainToInstance(Community, communityInfo);
     const community = await this.communityRepository.save(createCommunity);
     return community;

@@ -42,7 +42,18 @@ export class AuthService {
   async findUserByEmail(email: string) {
     const user = await this.userRepository.findOne({
       where: { email },
+      select: [
+        'id',
+        'name',
+        'nickname',
+        'email',
+        'createdAt',
+        'phone',
+        'password',
+      ],
     });
+
+    console.log('user:', user);
 
     if (!user) {
       throw new HttpException('이메일을 다시 확인해주세요', 400);

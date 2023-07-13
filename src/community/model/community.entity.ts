@@ -50,10 +50,10 @@ export class Community {
   })
   // @IsString()
   // @IsNotEmpty()
-  @Column({
+  @Column('simple-array', {
     nullable: true,
   })
-  image: string;
+  images: [];
 
   // 카테고리
   @ManyToOne(() => Category, (category) => category.Community, {

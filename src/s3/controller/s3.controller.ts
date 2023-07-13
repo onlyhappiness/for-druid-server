@@ -14,14 +14,14 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 export class S3Controller {
   constructor(private readonly S3Service: S3Service) {}
 
-  @Post('')
-  @UseInterceptors(FileInterceptor('file'))
-  async uploadFile(@UploadedFile() image) {
-    // console.log('image: ', image);
-    return await this.S3Service.uploadFile(image);
-  }
+  // @Post('')
+  // @UseInterceptors(FileInterceptor('file'))
+  // async uploadFile(@UploadedFile() image) {
+  //   // console.log('image: ', image);
+  //   return await this.S3Service.uploadFile(image);
+  // }
 
-  @Post('/multi')
+  @Post()
   @UseInterceptors(FilesInterceptor('images'))
   async uploadMultiFile(@UploadedFiles() images) {
     // console.log('images: ', images);
