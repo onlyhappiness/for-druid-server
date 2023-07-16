@@ -24,7 +24,6 @@ export class S3Controller {
   @Post()
   @UseInterceptors(FilesInterceptor('images'))
   async uploadMultiFile(@UploadedFiles() images) {
-    // console.log('images: ', images);
     return await this.S3Service.uploadFiles(images);
   }
 }

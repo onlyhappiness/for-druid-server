@@ -69,6 +69,10 @@ export class Users {
   @Column({ select: false })
   password: string;
 
+  @IsString()
+  @Column()
+  image: string;
+
   // 댓글
   @OneToMany(() => Comment, (comment) => comment.Users)
   Comment: Comment;
