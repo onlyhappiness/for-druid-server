@@ -42,14 +42,14 @@ export class Users {
   @Column()
   nickname: string;
 
-  @ApiProperty({
-    example: 'bread11@gmail.com',
-    description: '이메일',
-  })
-  @IsString()
-  @IsNotEmpty()
-  @Column()
-  email: string;
+  // @ApiProperty({
+  //   example: 'bread11@gmail.com',
+  //   description: '이메일',
+  // })
+  // @IsString()
+  // @IsNotEmpty()
+  // @Column()
+  // email: string;
 
   @ApiProperty({
     example: '01012345678',
@@ -70,8 +70,8 @@ export class Users {
   password: string;
 
   @IsString()
-  @Column()
-  image: string;
+  @Column({ nullable: true })
+  image: string | null;
 
   // 댓글
   @OneToMany(() => Comment, (comment) => comment.Users)

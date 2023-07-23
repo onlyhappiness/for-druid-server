@@ -39,24 +39,43 @@ export class AuthService {
    * 사용자 이메일로 찾기
    * 이메일을 param으로 받아 이메일에 해당하는 유저를 반환합니다.
    */
-  async findUserByEmail(email: string) {
+  // async findUserByEmail(email: string) {
+  //   const user = await this.userRepository.findOne({
+  //     where: { email },
+  //     select: [
+  //       'id',
+  //       'name',
+  //       'nickname',
+  //       'email',
+  //       'createdAt',
+  //       'phone',
+  //       'password',
+  //     ],
+  //   });
+
+  //   console.log('user:', user);
+
+  //   if (!user) {
+  //     throw new HttpException('이메일을 다시 확인해주세요', 400);
+  //   }
+  //   return user;
+  // }
+
+  /**
+   * @description
+   * 사용자 핸드폰번호 찾기
+   * 휴대폰번호를 param으로 받아 휴대폰번호가 맞는 유저를 반환합니다.
+   */
+  async findUserByPhone(phone: string) {
     const user = await this.userRepository.findOne({
-      where: { email },
-      select: [
-        'id',
-        'name',
-        'nickname',
-        'email',
-        'createdAt',
-        'phone',
-        'password',
-      ],
+      where: { phone },
+      select: ['id', 'name', 'nickname', 'createdAt', 'phone', 'password'],
     });
 
     console.log('user:', user);
 
     if (!user) {
-      throw new HttpException('이메일을 다시 확인해주세요', 400);
+      throw new HttpException('휴대폰 번호을 다시 확인해주세요', 400);
     }
     return user;
   }
@@ -66,14 +85,14 @@ export class AuthService {
    * 회원가입
    */
   async createUser(body: UserRegisterDTO) {
-    const { email, phone, nickname, password } = body;
+    const { phone, nickname, password } = body;
 
     // 이메일 중복 체크
     const duplicateEmail = await this.userRepository.findOne({
-      where: { email },
+      where: { phone },
     });
     if (duplicateEmail) {
-      throw new UnauthorizedException('이미 사용중인 이메일입니다.');
+      throw new UnauthorizedException('이미 사용중인 핸드폰 번호입니다.');
     }
 
     // 닉네임 중복 체크
@@ -97,9 +116,10 @@ export class AuthService {
 
   /** 로그인 */
   async login(body: UserLoginDTO) {
-    const { email, password } = body;
+    const { phone, password } = body;
 
-    const user = await this.findUserByEmail(email);
+    // const user = await this.findUserByEmail(email);
+    const user = await this.findUserByPhone(phone);
 
     const isPasswordValidated = await bcrypt.compare(password, user.password);
     if (!isPasswordValidated) {
