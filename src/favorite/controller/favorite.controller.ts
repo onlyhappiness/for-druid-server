@@ -5,13 +5,22 @@ import { FavoriteService } from '@favorite/service/favorite.service';
 import {
   Body,
   Controller,
+  DefaultValuePipe,
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Users } from '@user/model/user.entity';
 
 @ApiTags('Favorite')
@@ -19,21 +28,27 @@ import { Users } from '@user/model/user.entity';
 export class FavoriteController {
   constructor(private readonly favoriteService: FavoriteService) {}
 
+  @Get()
+  @ApiOperation({ summary: '찜한 커뮤니티 보기' })
+  @ApiQuery({ name: 'page', description: '설정 안 할 경우 기본값 1' })
+  @ApiQuery({ name: 'limit', description: '설정 안 할 경우 기본값 15' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: '찜한 커뮤니티 보기' })
-  @Get()
-  async findFavorite(@CurrentUser() currentUser: Users) {
-    return this.favoriteService.findAllFavorite(currentUser);
+  async findFavorite(
+    @CurrentUser() currentUser: Users,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(15), ParseIntPipe) limit: number,
+  ) {
+    return this.favoriteService.findAllFavorite(currentUser, page, limit);
   }
 
+  @Post()
+  @ApiOperation({ summary: '찜하기' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: '찜하기' })
   @ApiBody({
     type: CreateFavoriteDTO,
   })
-  @Post()
   async createFavorite(
     @CurrentUser() CurrentUser: Users,
     @Body() body: CreateFavoriteDTO,
@@ -41,10 +56,10 @@ export class FavoriteController {
     return this.favoriteService.createFavorite(CurrentUser, body);
   }
 
+  @Delete('/:favoriteId')
+  @ApiOperation({ summary: '찜한 커뮤니티 삭제' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: '찜한 커뮤니티 삭제' })
-  @Delete('/:favoriteId')
   async deleteFavorite(
     @Param('favoriteId') favoriteId: number,
     @CurrentUser() currentUser: Users,

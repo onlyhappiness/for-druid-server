@@ -16,7 +16,7 @@ export class AuthController {
     type: UserRegisterDTO,
   })
   @ApiOperation({ summary: '회원가입' })
-  @Post('/register')
+  @Post('/signup')
   async createUser(@Body() body: UserRegisterDTO) {
     return await this.authService.createUser(body);
   }
@@ -34,7 +34,7 @@ export class AuthController {
   @ApiOkResponse({
     description: '성공',
   })
-  @Get()
+  @Get('/login')
   async loginUser() {
     return '로그인한 유저';
   }

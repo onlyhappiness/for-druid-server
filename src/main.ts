@@ -21,8 +21,8 @@ async function bootstrap() {
 
   // TODO: setUpOpenAPIMiddleware
   const config = new DocumentBuilder()
-    .setTitle('for-druod-server')
-    .setDescription('씨 발아 API')
+    .setTitle('for-druid-server')
+    .setDescription('드루이드 다이어리 API')
     .setVersion('0.0.1')
     .build();
 

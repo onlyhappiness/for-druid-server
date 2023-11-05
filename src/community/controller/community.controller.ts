@@ -6,9 +6,11 @@ import { CommunityService } from '@community/service/community.service';
 import {
   Body,
   Controller,
+  DefaultValuePipe,
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   Put,
   Query,
@@ -30,18 +32,28 @@ import { Users } from '@user/model/user.entity';
 export class CommunityController {
   constructor(private readonly communityService: CommunityService) {}
 
+  @Get()
   @ApiOperation({ summary: '커뮤니티 보기' })
   @ApiQuery({
     name: 'page',
     required: true,
-    description: '요청할 페이지',
+    description: '설정 안 할 경우 기본값 1',
     example: 1,
   })
-  @Get()
-  async findAllCommunity(@Query('page') page = 1) {
-    return await this.communityService.findAllCommunity(page);
+  @ApiQuery({
+    name: 'limit',
+    required: true,
+    description: '설정 안 할 경우 기본값 15',
+    example: 15,
+  })
+  async findAllCommunity(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(15), ParseIntPipe) limit: number,
+  ) {
+    return await this.communityService.findAllCommunity(page, limit);
   }
 
+  @Get('/:communityId')
   @ApiOperation({ summary: '커뮤니티 상세' })
   @ApiParam({
     name: 'communityId',
@@ -49,18 +61,17 @@ export class CommunityController {
     description: '커뮤니티 아이디',
     type: 'number',
   })
-  @Get('/:communityId')
   async findCommunity(@Param('communityId') communityId: number) {
     return await this.communityService.findCommunity(communityId);
   }
 
+  @Post()
+  @ApiOperation({ summary: '커뮤니티 생성' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: '커뮤니티 생성' })
   @ApiBody({
     type: CreateCommunityDTO,
   })
-  @Post()
   async createCommunity(
     @CurrentUser() currentUser: Users,
     @Body() body: CreateCommunityDTO,
@@ -68,16 +79,16 @@ export class CommunityController {
     return await this.communityService.createCommunity(currentUser, body);
   }
 
+  @Put('/:communityId')
+  @ApiOperation({ summary: '커뮤니티 수정' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: '커뮤니티 수정' })
   @ApiParam({
     name: 'communityId',
     required: true,
     description: '커뮤니티 아이디',
     type: 'number',
   })
-  @Put('/:communityId')
   async updateCommunity(
     @Param('communityId') communityId: number,
     @CurrentUser() currentUser: Users,
@@ -90,16 +101,16 @@ export class CommunityController {
     );
   }
 
+  @Delete('/:communityId')
+  @ApiOperation({ summary: '커뮤니티 삭제' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: '커뮤니티 삭제' })
   @ApiParam({
     name: 'communityId',
     required: true,
     description: '커뮤니티 아이디',
     type: 'number',
   })
-  @Delete('/:communityId')
   async deleteCommunity(
     @Param('communityId') communityId: number,
     @CurrentUser() currentUser: Users,

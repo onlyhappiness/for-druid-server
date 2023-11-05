@@ -3,7 +3,11 @@ import { CategoryService } from '@category/service/category.service';
 import { CreateCommunityDTO } from '@community/dto/create.community.dto';
 import { UpdateCommunityDTO } from '@community/dto/update.community.dto';
 import { Community } from '@community/model/community.entity';
-import { HttpException, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from '@user/model/user.entity';
 import { plainToInstance } from 'class-transformer';
@@ -45,23 +49,38 @@ export class CommunityService {
   }
 
   /** 커뮤니티 전체보기 */
-  async findAllCommunity(page = 1) {
-    const take = 10;
+  async findAllCommunity(page, limit) {
+    const queryBuilder =
+      this.communityRepository.createQueryBuilder('community');
 
-    const [category, total] = await this.communityRepository.findAndCount({
-      take,
-      skip: (page - 1) * take,
-      relations: ['Users'],
-    });
+    try {
+      const community = await queryBuilder
+        .leftJoinAndSelect('community.Users', 'user')
+        .skip(limit * (page - 1))
+        .take(limit)
+        .getMany();
 
-    return {
-      data: category,
-      meta: {
-        total,
-        page,
-        last_page: Math.ceil(total / take),
-      },
-    };
+      return community;
+    } catch {
+      throw new InternalServerErrorException();
+    }
+
+    // const take = 10;
+
+    // const [category, total] = await this.communityRepository.findAndCount({
+    //   take,
+    //   skip: (page - 1) * take,
+    //   relations: ['Users'],
+    // });
+
+    // return {
+    //   data: category,
+    //   meta: {
+    //     total,
+    //     page,
+    //     last_page: Math.ceil(total / take),
+    //   },
+    // };
   }
 
   /** 커뮤니티 상세 */

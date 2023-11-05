@@ -1,6 +1,10 @@
 import { CreateCategoryDTO } from '@category/dto/category.create.dto';
 import { Category } from '@category/model/category.entity';
-import { HttpException, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -50,22 +54,19 @@ export class CategoryService {
   }
 
   /** 카테고리 보기 */
-  async findAllCategory(page = 1) {
-    const take = 10;
+  async findAllCategory(page, limit) {
+    const queryBuilder = this.categoryRepository.createQueryBuilder('category');
 
-    const [category, total] = await this.categoryRepository.findAndCount({
-      take,
-      skip: (page - 1) * take,
-    });
+    try {
+      const category = await queryBuilder
+        .skip(limit * (page - 1))
+        .take(limit)
+        .getMany();
 
-    return {
-      data: category,
-      meta: {
-        total,
-        page,
-        last_page: Math.ceil(total / take),
-      },
-    };
+      return category;
+    } catch {
+      throw new InternalServerErrorException();
+    }
   }
 
   /** 카테고리 상세 보기 */

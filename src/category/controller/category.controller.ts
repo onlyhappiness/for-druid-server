@@ -5,9 +5,11 @@ import { CategoryService } from '@category/service/category.service';
 import {
   Body,
   Controller,
+  DefaultValuePipe,
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   Put,
   Query,
@@ -27,18 +29,28 @@ import {
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
+  @Get()
   @ApiOperation({ summary: '카테고리 보기' })
   @ApiQuery({
     name: 'page',
     required: true,
-    description: '요청할 페이지',
+    description: '설정 안 할 경우 기본값 1',
     example: 1,
   })
-  @Get()
-  async findAllCategory(@Query('page') page = 1) {
-    return await this.categoryService.findAllCategory(page);
+  @ApiQuery({
+    name: 'limit',
+    required: true,
+    description: '설정 안 할 경우 기본값 15',
+    example: 15,
+  })
+  async findAllCategory(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(15), ParseIntPipe) limit: number,
+  ) {
+    return await this.categoryService.findAllCategory(page, limit);
   }
 
+  @Get('/:categoryId')
   @ApiOperation({ summary: '카테고리 상세' })
   @ApiParam({
     name: 'categoryId',
@@ -46,25 +58,25 @@ export class CategoryController {
     description: '카테고리 아이디',
     type: 'number',
   })
-  @Get('/:categoryId')
   async findCategory(@Param('categoryId') categoryId: number) {
     return await this.categoryService.findCategory(categoryId);
   }
 
+  @Post()
+  @ApiOperation({ summary: '카테고리 생성' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: '카테고리 생성' })
   @ApiBody({
     type: CreateCategoryDTO,
   })
-  @Post()
   async createCategory(@Body() body: CreateCategoryDTO) {
     return await this.categoryService.createCategory(body);
   }
 
+  @Put('/:categoryId')
+  @ApiOperation({ summary: '카테고리 수정' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: '카테고리 수정' })
   @ApiParam({
     name: 'categoryId',
     required: true,
@@ -74,7 +86,6 @@ export class CategoryController {
   @ApiBody({
     type: UpdateCategoryDTO,
   })
-  @Put('/:categoryId')
   async updateCategory(
     @Param('categoryId') categoryId: number,
     @Body() body: UpdateCategoryDTO,
@@ -82,16 +93,16 @@ export class CategoryController {
     return await this.categoryService.updateCategory(categoryId, body);
   }
 
+  @Delete('/:categoryId')
+  @ApiOperation({ summary: '카테고리 삭제' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: '카테고리 삭제' })
   @ApiParam({
     name: 'categoryId',
     required: true,
     description: '카테고리 아이디',
     type: 'number',
   })
-  @Delete('/:categoryId')
   async deleteCategory(@Param('categoryId') categoryId: number) {
     return await this.categoryService.deleteCategory(categoryId);
   }

@@ -1,4 +1,8 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateNoticeDTO } from '@notice/dto/create.notice.dto';
 import { UpdateNoticeDTO } from '@notice/dto/update.notice.dto';
@@ -25,22 +29,19 @@ export class NoticeService {
   }
 
   /** 공지사항 전체보기 */
-  async findAllNotice(page = 1) {
-    const take = 10;
+  async findAllNotice(page, limit) {
+    const queryBuilder = this.noticeRepository.createQueryBuilder('notice');
 
-    const [notice, total] = await this.noticeRepository.findAndCount({
-      take,
-      skip: (page - 1) * take,
-    });
+    try {
+      const notice = await queryBuilder
+        .skip(limit * (page - 1))
+        .take(limit)
+        .getMany();
 
-    return {
-      data: notice,
-      meta: {
-        total,
-        page,
-        last_page: Math.ceil(total / take),
-      },
-    };
+      return notice;
+    } catch {
+      throw new InternalServerErrorException();
+    }
   }
 
   /** 공지사항 상세 */
@@ -50,8 +51,6 @@ export class NoticeService {
 
   /** 공지사항 생성 */
   async createNotice(body: CreateNoticeDTO) {
-    // const { title, content } = body;
-
     const notice = await this.noticeRepository.save(body);
 
     return notice;

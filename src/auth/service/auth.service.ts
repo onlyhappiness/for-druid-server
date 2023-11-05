@@ -72,8 +72,6 @@ export class AuthService {
       select: ['id', 'name', 'nickname', 'createdAt', 'phone', 'password'],
     });
 
-    console.log('user:', user);
-
     if (!user) {
       throw new HttpException('휴대폰 번호을 다시 확인해주세요', 400);
     }

@@ -81,7 +81,7 @@ const typeOrmModuleOptions = {
     CommunityModule,
     CommentModule,
     InquiryModule,
-    S3Module,
+    // S3Module,
   ],
   controllers: [AppController],
   providers: [AppService],
