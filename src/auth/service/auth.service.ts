@@ -131,4 +131,12 @@ export class AuthService {
 
     return { access_token };
   }
+
+  // 로그인 유저 체크
+  async loginUser(currentUser) {
+    const { id: userId } = currentUser;
+
+    const user = await this.findUserById(userId);
+    return user;
+  }
 }

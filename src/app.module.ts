@@ -25,6 +25,8 @@ import { Comment } from '@comment/model/comment.entity';
 import { InquiryModule } from './inquiry/inquiry.module';
 import { Inquiry } from '@inquiry/model/inquiry.entity';
 import { S3Module } from './s3/s3.module';
+import { ChatGateway } from './chat/chat.gateway';
+import { ChatModule } from './chat/chat.module';
 
 const typeOrmModuleOptions = {
   useFactory: async (
@@ -81,9 +83,10 @@ const typeOrmModuleOptions = {
     CommunityModule,
     CommentModule,
     InquiryModule,
+    ChatModule,
     // S3Module,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ChatGateway],
 })
 export class AppModule {}
