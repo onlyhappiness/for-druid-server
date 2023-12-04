@@ -69,7 +69,7 @@ export class AuthService {
   async findUserByPhone(phone: string) {
     const user = await this.userRepository.findOne({
       where: { phone },
-      select: ['id', 'name', 'nickname', 'createdAt', 'phone', 'password'],
+      select: ['id', 'name', 'createdAt', 'phone', 'password'],
     });
 
     if (!user) {
@@ -83,7 +83,7 @@ export class AuthService {
    * 회원가입
    */
   async createUser(body: UserRegisterDTO) {
-    const { phone, nickname, password } = body;
+    const { phone, password } = body;
 
     // 이메일 중복 체크
     const duplicateEmail = await this.userRepository.findOne({
@@ -94,12 +94,12 @@ export class AuthService {
     }
 
     // 닉네임 중복 체크
-    const duplicateNickname = await this.userRepository.findOne({
-      where: { nickname },
-    });
-    if (duplicateNickname) {
-      throw new UnauthorizedException('이미 사용중인 닉네임입니다.');
-    }
+    // const duplicateNickname = await this.userRepository.findOne({
+    //   where: { nickname },
+    // });
+    // if (duplicateNickname) {
+    //   throw new UnauthorizedException('이미 사용중인 닉네임입니다.');
+    // }
 
     const hashedPassword = await bcrypt.hash(password, 12);
     const user = await this.userRepository.save({

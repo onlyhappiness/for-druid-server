@@ -20,6 +20,7 @@
     "paths": {
       "@auth/*": ["./src/auth/*"],
       "@category/*": ["./src/category/*"],
+      "@chat/*": ["./src/chat/*"],
       "@comment/*": ["./src/comment/*"],
       "@community/*": ["./src/community/*"],
       "@common/*": ["./src/common/*"],

@@ -1,9 +1,12 @@
+import { ChatMessage } from '@chat/model/chat-message.entity';
+import { ChatRoom } from '@chat/model/chat-room.entity';
 import { Comment } from '@comment/model/comment.entity';
 import { Community } from '@community/model/community.entity';
 import { Favorite } from '@favorite/model/favorite.entity';
+import { Inquiry } from '@inquiry/model/inquiry.entity';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
-import { Inquiry } from 'src/inquiry/model/inquiry.entity';
+import { IsNotEmpty, IsString } from 'class-validator';
+
 import {
   Column,
   CreateDateColumn,
@@ -25,7 +28,7 @@ export class Users {
   updatedAt: Date;
 
   @ApiProperty({
-    example: '빵입니다',
+    example: '',
     description: '이름',
   })
   @IsString()
@@ -34,25 +37,7 @@ export class Users {
   name: string;
 
   @ApiProperty({
-    example: 'bread',
-    description: '닉네임',
-  })
-  @IsString()
-  @IsNotEmpty()
-  @Column()
-  nickname: string;
-
-  // @ApiProperty({
-  //   example: 'bread11@gmail.com',
-  //   description: '이메일',
-  // })
-  // @IsString()
-  // @IsNotEmpty()
-  // @Column()
-  // email: string;
-
-  @ApiProperty({
-    example: '01012345678',
+    example: '',
     description: '전화번호',
   })
   @IsString()
@@ -61,7 +46,7 @@ export class Users {
   phone: string;
 
   @ApiProperty({
-    example: 'test1234!',
+    example: '',
     description: '비밀번호',
   })
   @IsString()
@@ -88,4 +73,12 @@ export class Users {
   // 문의
   @OneToMany(() => Inquiry, (inquiry) => inquiry.Users)
   Inquiry: Inquiry;
+
+  // 채팅방
+  @OneToMany(() => ChatRoom, (chatRoom) => chatRoom.Users)
+  ChatRoom: ChatRoom;
+
+  // 채팅 메시지
+  @OneToMany(() => ChatMessage, (chatMessage) => chatMessage.Users)
+  ChatMessage: ChatMessage;
 }

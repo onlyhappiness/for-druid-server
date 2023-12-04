@@ -24,7 +24,7 @@ export class Inquiry {
   updatedAt: Date;
 
   @ApiProperty({
-    example: '제목',
+    example: '',
     description: '제목',
   })
   @IsString()
@@ -33,7 +33,7 @@ export class Inquiry {
   title: string;
 
   @ApiProperty({
-    example: '내용',
+    example: '',
     description: '내용',
   })
   @IsString()
