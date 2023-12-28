@@ -1,32 +1,33 @@
+import { Category } from '@category/model/category.entity';
+import { ChatMessage } from '@chat/model/chat-message.entity';
+import { ChatRoom } from '@chat/model/chat-room.entity';
+import { Comment } from '@comment/model/comment.entity';
+import { Community } from '@community/model/community.entity';
+import { Event } from '@event/model/event.entity';
+import { Faq } from '@faq/model/faq.entity';
+import { Favorite } from '@favorite/model/favorite.entity';
+import { Inquiry } from '@inquiry/model/inquiry.entity';
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { Notice } from '@notice/model/notice.entity';
+import { Users } from '@user/model/user.entity';
+import * as Joi from 'joi';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
-import { FavoriteModule } from './favorite/favorite.module';
-import { EventModule } from './event/event.module';
-import { NoticeModule } from './notice/notice.module';
-import { FaqModule } from './faq/faq.module';
-import * as Joi from 'joi';
-import { Users } from '@user/model/user.entity';
-import { Event } from '@event/model/event.entity';
-import { Notice } from '@notice/model/notice.entity';
-import { Faq } from '@faq/model/faq.entity';
 import { CategoryModule } from './category/category.module';
-import { CommunityModule } from './community/community.module';
-import { Category } from '@category/model/category.entity';
-import { Community } from '@community/model/community.entity';
-import { Favorite } from '@favorite/model/favorite.entity';
-import { CommentModule } from './comment/comment.module';
-import { Comment } from '@comment/model/comment.entity';
-import { InquiryModule } from './inquiry/inquiry.module';
-import { Inquiry } from '@inquiry/model/inquiry.entity';
-import { S3Module } from './s3/s3.module';
 import { ChatGateway } from './chat/chat.gateway';
 import { ChatModule } from './chat/chat.module';
+import { CommentModule } from './comment/comment.module';
+import { CommunityModule } from './community/community.module';
+import { EventModule } from './event/event.module';
+import { FaqModule } from './faq/faq.module';
+import { FavoriteModule } from './favorite/favorite.module';
+import { InquiryModule } from './inquiry/inquiry.module';
+import { NoticeModule } from './notice/notice.module';
+import { UserModule } from './user/user.module';
 
 const typeOrmModuleOptions = {
   useFactory: async (
@@ -41,6 +42,8 @@ const typeOrmModuleOptions = {
     database: configService.get('DB_DATABASE'),
     entities: [
       Category,
+      ChatMessage,
+      ChatRoom,
       Comment,
       Community,
       Event,
