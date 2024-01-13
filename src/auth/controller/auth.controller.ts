@@ -4,13 +4,7 @@ import { JwtAuthGuard } from '@auth/jwt/jwt.guard';
 import { AuthService } from '@auth/service/auth.service';
 import { CurrentUser } from '@common/decorators/user.decorator';
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiBody,
-  ApiOkResponse,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Users } from '@user/model/user.entity';
 
 @ApiTags('AUTH')
@@ -38,6 +32,8 @@ export class AuthController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   async loginUser(@CurrentUser() currentUser: Users) {
+    console.log('currentUser', currentUser);
+    // return currentUser;
     return this.authService.loginUser(currentUser);
   }
 }
