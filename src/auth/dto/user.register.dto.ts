@@ -5,6 +5,6 @@ export class UserRegisterDTO extends PickType(Users, [
   // 'email',
   'phone',
   // 'nickname',
-  'name',
+  'nickname',
   'password',
 ] as const) {}

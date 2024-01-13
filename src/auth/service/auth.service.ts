@@ -36,40 +36,13 @@ export class AuthService {
 
   /**
    * @description
-   * 사용자 이메일로 찾기
-   * 이메일을 param으로 받아 이메일에 해당하는 유저를 반환합니다.
-   */
-  // async findUserByEmail(email: string) {
-  //   const user = await this.userRepository.findOne({
-  //     where: { email },
-  //     select: [
-  //       'id',
-  //       'name',
-  //       'nickname',
-  //       'email',
-  //       'createdAt',
-  //       'phone',
-  //       'password',
-  //     ],
-  //   });
-
-  //   console.log('user:', user);
-
-  //   if (!user) {
-  //     throw new HttpException('이메일을 다시 확인해주세요', 400);
-  //   }
-  //   return user;
-  // }
-
-  /**
-   * @description
    * 사용자 핸드폰번호 찾기
    * 휴대폰번호를 param으로 받아 휴대폰번호가 맞는 유저를 반환합니다.
    */
   async findUserByPhone(phone: string) {
     const user = await this.userRepository.findOne({
       where: { phone },
-      select: ['id', 'name', 'createdAt', 'phone', 'password'],
+      select: ['id', 'nickname', 'createdAt', 'phone', 'password'],
     });
 
     if (!user) {
@@ -83,31 +56,13 @@ export class AuthService {
    * 회원가입
    */
   async createUser(body: UserRegisterDTO) {
-    const { phone, password } = body;
-
-    // 이메일 중복 체크
-    const duplicateEmail = await this.userRepository.findOne({
-      where: { phone },
-    });
-    if (duplicateEmail) {
-      throw new UnauthorizedException('이미 사용중인 핸드폰 번호입니다.');
-    }
-
-    // 닉네임 중복 체크
-    // const duplicateNickname = await this.userRepository.findOne({
-    //   where: { nickname },
-    // });
-    // if (duplicateNickname) {
-    //   throw new UnauthorizedException('이미 사용중인 닉네임입니다.');
-    // }
-
-    const hashedPassword = await bcrypt.hash(password, 12);
+    const hashedPassword = await bcrypt.hash(body.password, 12);
     const user = await this.userRepository.save({
       ...body,
       password: hashedPassword,
     });
 
-    const { password: userPassword, ...withoutPassword } = user;
+    const { password, ...withoutPassword } = user;
 
     return withoutPassword;
   }
@@ -116,7 +71,6 @@ export class AuthService {
   async login(body: UserLoginDTO) {
     const { phone, password } = body;
 
-    // const user = await this.findUserByEmail(email);
     const user = await this.findUserByPhone(phone);
 
     const isPasswordValidated = await bcrypt.compare(password, user.password);
