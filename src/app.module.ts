@@ -1,3 +1,4 @@
+import { MailerModule } from '@nestjs-modules/mailer';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
@@ -7,6 +8,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { EmailVerificationModule } from './email-verification/email-verification.module';
 import { UserModule } from './user/user.module';
 
 const typeOrmModuleOptions = {
@@ -20,6 +22,9 @@ const typeOrmModuleOptions = {
     username: configService.get('DB_USERNAME'),
     password: configService.get('DB_PASSWORD'),
     database: configService.get('DB_DATABASE'),
+    ssl: {
+      rejectUnauthorized: true,
+    },
     entities: [Users],
     synchronize: true, // ! set 'false' in production
     autoLoadEntities: true,
@@ -44,8 +49,25 @@ const typeOrmModuleOptions = {
       }),
     }),
     TypeOrmModule.forRootAsync(typeOrmModuleOptions),
+    MailerModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        transport: {
+          host: 'smtp.naver.com',
+          port: 587,
+          auth: {
+            user: configService.get('EMAIL_ADDRESS'),
+            pass: configService.get('EMAIL_PASSWORD'),
+          },
+        },
+        defaults: {
+          from: configService.get('EMAIL_ADDRESS'),
+        },
+      }),
+    }),
     AuthModule,
     UserModule,
+    EmailVerificationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

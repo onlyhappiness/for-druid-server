@@ -19,16 +19,8 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@auth/*": ["./src/auth/*"],
-      "@category/*": ["./src/category/*"],
-      "@chat/*": ["./src/chat/*"],
-      "@comment/*": ["./src/comment/*"],
-      "@community/*": ["./src/community/*"],
       "@common/*": ["./src/common/*"],
-      "@event/*": ["./src/event/*"],
-      "@faq/*": ["./src/faq/*"],
-      "@favorite/*": ["./src/favorite/*"],
-      "@inquiry/*": ["./src/inquiry/*"],
-      "@notice/*": ["./src/notice/*"],
+      "@email-verification/*": ["./src/email-verification/*"],
       "@user/*": ["./src/user/*"]
     }
   }

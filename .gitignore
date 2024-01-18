@@ -1,4 +1,5 @@
 .env
+src/config
 
 # compiled output
 /dist
