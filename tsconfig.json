@@ -21,7 +21,8 @@
       "@auth/*": ["./src/auth/*"],
       "@common/*": ["./src/common/*"],
       "@email-verification/*": ["./src/email-verification/*"],
-      "@user/*": ["./src/user/*"]
+      "@user/*": ["./src/user/*"],
+      "@verification/*": ["./src/verification/*"]
     }
   }
 }

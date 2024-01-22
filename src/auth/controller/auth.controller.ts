@@ -32,7 +32,6 @@ export class AuthController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   async loginUser(@CurrentUser() currentUser: Users) {
-    console.log('currentUser', currentUser);
     return this.authService.loginUser(currentUser);
   }
 }
