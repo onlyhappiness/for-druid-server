@@ -9,6 +9,11 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+export enum LoginType {
+  SIGNNAME = 'SIGNNAME',
+  GOOGLE = 'GOOGLE',
+}
+
 @Entity({ name: 'user' })
 export class Users {
   @PrimaryGeneratedColumn()
@@ -19,6 +24,17 @@ export class Users {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ApiProperty({
+    example: LoginType,
+    description: '로그인 타입',
+  })
+  @Column({
+    type: 'enum',
+    enum: LoginType,
+    default: LoginType.SIGNNAME,
+  })
+  loginType: LoginType;
 
   @ApiProperty({
     example: '',
@@ -58,5 +74,5 @@ export class Users {
 
   @IsString()
   @Column({ nullable: true })
-  image: string | null;
+  image?: string;
 }

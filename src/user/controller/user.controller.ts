@@ -20,7 +20,6 @@ export class UserController {
     type: FindEmailDTO,
   })
   async findEmail(@Body() body: FindEmailDTO) {
-    console.log('body: ', body);
     return await this.userService.checkUserByEmail(body.email);
   }
 

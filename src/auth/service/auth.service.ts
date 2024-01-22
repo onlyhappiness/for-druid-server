@@ -56,12 +56,17 @@ export class AuthService {
    * 회원가입
    */
   async createUser(body: UserRegisterDTO) {
+    // 소셜 로그인
+    // 비밀번호 생성
+
+    // 일반 로그인
     const hashedPassword = await bcrypt.hash(body.password, 12);
     const user = await this.userRepository.save({
       ...body,
       password: hashedPassword,
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...withoutPassword } = user;
 
     return withoutPassword;
