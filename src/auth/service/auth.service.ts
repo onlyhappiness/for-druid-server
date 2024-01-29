@@ -42,7 +42,7 @@ export class AuthService {
   async findUserByPhone(phone: string) {
     const user = await this.userRepository.findOne({
       where: { phone },
-      select: ['id', 'nickname', 'createdAt', 'phone', 'password'],
+      select: ['id', 'signname', 'createdAt', 'phone', 'password'],
     });
 
     if (!user) {
