@@ -26,14 +26,14 @@ export class UserService {
     return true;
   }
 
-  /** 닉네임 중복 체크 */
-  async checkUserByNickname(nickname: string) {
+  /** 아이디 중복 체크 */
+  async checkUserBySignname(signname: string) {
     const user = await this.userRepository.findOne({
-      where: { nickname },
+      where: { signname },
     });
 
     if (user) {
-      throw new HttpException('이미 사용중인 닉네임입니다.', 400);
+      throw new HttpException('이미 사용중인 아이디입니다.', 400);
     }
     return true;
   }

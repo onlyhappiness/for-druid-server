@@ -43,7 +43,7 @@ export class Users {
   @IsString()
   @IsNotEmpty()
   @Column()
-  nickname: string;
+  signname: string;
 
   @ApiProperty({
     example: '',

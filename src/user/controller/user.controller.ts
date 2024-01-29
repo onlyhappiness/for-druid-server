@@ -23,13 +23,13 @@ export class UserController {
     return await this.userService.checkUserByEmail(body.email);
   }
 
-  @Post('/check-nickname')
-  @ApiOperation({ summary: '닉네임 중복 체크' })
+  @Post('/check-signname')
+  @ApiOperation({ summary: '아이디 중복 체크' })
   @ApiBody({
     type: FindNicknameDTO,
   })
-  async findNickname(@Body() body: FindNicknameDTO) {
-    return await this.userService.checkUserByNickname(body.nickname);
+  async findSignname(@Body() body: FindNicknameDTO) {
+    return await this.userService.checkUserBySignname(body.signname);
   }
 
   @Post('check-phone')
