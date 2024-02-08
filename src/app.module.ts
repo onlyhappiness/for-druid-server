@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { Users } from '@user/model/user.entity';
+import { Verification } from '@verification/model/verification.entity';
 import * as Joi from 'joi';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { AppController } from './app.controller';
@@ -21,10 +22,10 @@ const typeOrmModuleOptions = {
     username: configService.get('DB_USERNAME'),
     password: configService.get('DB_PASSWORD'),
     database: configService.get('DB_DATABASE'),
-    // ssl: {
-    //   rejectUnauthorized: true,
-    // },
-    entities: [Users],
+    ssl: {
+      rejectUnauthorized: true,
+    },
+    entities: [Users, Verification],
     synchronize: true, // ! set 'false' in production
     autoLoadEntities: true,
     logging: true,

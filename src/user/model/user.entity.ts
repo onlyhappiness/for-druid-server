@@ -45,14 +45,14 @@ export class Users {
   @Column()
   signname: string;
 
-  @ApiProperty({
-    example: '',
-    description: '이메일',
-  })
-  @IsString()
-  @IsNotEmpty()
-  @Column()
-  email: string;
+  // @ApiProperty({
+  //   example: '',
+  //   description: '이메일',
+  // })
+  // @IsString()
+  // @IsNotEmpty()
+  // @Column()
+  // email: string;
 
   @ApiProperty({
     example: '',

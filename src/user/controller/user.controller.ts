@@ -2,7 +2,7 @@ import { JwtAuthGuard } from '@auth/jwt/jwt.guard';
 import { CurrentUser } from '@common/decorators/user.decorator';
 import { Body, Controller, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { FindEmailDTO } from '@user/dto/find.email.dto';
+// import { FindEmailDTO } from '@user/dto/find.email.dto';
 import { FindNicknameDTO } from '@user/dto/find.nickname.dto';
 import { FindPhoneDTO } from '@user/dto/find.phone.dto';
 import { UpdateUserProfileDTO } from '@user/dto/update.userProfile.dto';
@@ -14,14 +14,15 @@ import { UserService } from '@user/service/user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post('/check-email')
-  @ApiOperation({ summary: '이메일 중복 체크' })
-  @ApiBody({
-    type: FindEmailDTO,
-  })
-  async findEmail(@Body() body: FindEmailDTO) {
-    return await this.userService.checkUserByEmail(body.email);
-  }
+  /** @deprecated */
+  // @Post('/check-email')
+  // @ApiOperation({ summary: '이메일 중복 체크' })
+  // @ApiBody({
+  //   type: FindEmailDTO,
+  // })
+  // async findEmail(@Body() body: FindEmailDTO) {
+  // return await this.userService.checkUserByEmail(body.email);
+  // }
 
   @Post('/check-signname')
   @ApiOperation({ summary: '아이디 중복 체크' })
