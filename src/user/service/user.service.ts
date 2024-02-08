@@ -14,17 +14,20 @@ export class UserService {
     private readonly authService: AuthService,
   ) {}
 
-  /** 이메일 중복 체크 */
-  async checkUserByEmail(email: string) {
-    const user = await this.userRepository.findOne({
-      where: { email },
-    });
+  /**
+   * @deprecated
+   * 이메일 중복 체크
+   */
+  // async checkUserByEmail(email: string) {
+  //   const user = await this.userRepository.findOne({
+  //     where: { email },
+  //   });
 
-    if (user) {
-      throw new HttpException('중복된 이메일이 있습니다.', 400);
-    }
-    return true;
-  }
+  //   if (user) {
+  //     throw new HttpException('중복된 이메일이 있습니다.', 400);
+  //   }
+  //   return true;
+  // }
 
   /** 아이디 중복 체크 */
   async checkUserBySignname(signname: string) {
