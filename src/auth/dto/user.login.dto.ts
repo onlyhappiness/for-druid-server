@@ -3,6 +3,7 @@ import { Users } from '@user/model/user.entity';
 
 export class UserLoginDTO extends PickType(Users, [
   // 'email',
-  'phone',
+  'loginType',
+  'signname',
   'password',
 ] as const) {}

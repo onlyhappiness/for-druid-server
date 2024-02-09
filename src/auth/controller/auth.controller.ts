@@ -12,7 +12,7 @@ import { Users } from '@user/model/user.entity';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('/signup')
+  @Post('/register')
   @ApiOperation({ summary: '회원가입' })
   @ApiBody({
     type: UserRegisterDTO,
