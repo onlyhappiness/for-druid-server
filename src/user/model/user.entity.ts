@@ -29,6 +29,7 @@ export class Users {
     example: LoginType,
     description: '로그인 타입',
   })
+  @IsNotEmpty()
   @Column({
     type: 'enum',
     enum: LoginType,

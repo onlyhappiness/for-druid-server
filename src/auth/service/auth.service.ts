@@ -3,6 +3,7 @@ import { UserRegisterDTO } from '@auth/dto/user.register.dto';
 import {
   HttpException,
   Injectable,
+  InternalServerErrorException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -25,11 +26,30 @@ export class AuthService {
    * userId를 param으로 받아서 어떤 유저인지 반환합니다.
    */
   async findUserById(userId: number) {
+    const queryBuilder = this.userRepository.createQueryBuilder('user');
+
+    try {
+      const user = await queryBuilder
+        .where('user.id = :userId', { userId })
+        .getOne();
+
+      if (!user) {
+        throw new HttpException('해당 유저는 존재하지 않습니다.', 400);
+      }
+      return user;
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async findUserBySignname(signname: string) {
     const user = await this.userRepository.findOne({
-      where: { id: userId },
+      where: { signname },
+      select: ['id', 'signname', 'createdAt', 'phone', 'password'],
     });
+
     if (!user) {
-      throw new HttpException('해당 유저는 존재하지 않습니다.', 400);
+      throw new HttpException('아이디와 비밀번호를 다시 확인해주세요', 400);
     }
     return user;
   }
@@ -74,9 +94,10 @@ export class AuthService {
 
   /** 로그인 */
   async login(body: UserLoginDTO) {
-    const { phone, password } = body;
+    const { signname, password } = body;
 
-    const user = await this.findUserByPhone(phone);
+    // const user = await this.findUserByPhone(phone);
+    const user = await this.findUserBySignname(signname);
 
     const isPasswordValidated = await bcrypt.compare(password, user.password);
     if (!isPasswordValidated) {

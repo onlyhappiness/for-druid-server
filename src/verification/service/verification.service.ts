@@ -1,5 +1,11 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { SmsRequestDto } from '@verification/dto/sms.request.dto';
+import { SmsVerifyDto } from '@verification/dto/sms.verify.dto';
 import {
   Verification,
   VerificationType,
@@ -29,7 +35,7 @@ export class VerificationService {
     return Math.floor(Math.random() * 900000) + 100000;
   }
 
-  async sendSMS(body) {
+  async sendSMS(body: SmsRequestDto) {
     const { to } = body;
 
     const code = this.generateDigitCode();
@@ -51,6 +57,27 @@ export class VerificationService {
     } catch (error) {
       console.error('sms 인증코드 전송 실패: ', error);
       throw new HttpException(error, 400);
+    }
+  }
+
+  async verifySms(body: SmsVerifyDto) {
+    const { to, key } = body;
+
+    const queryBuilder =
+      this.verificationRepository.createQueryBuilder('verification');
+
+    try {
+      const verify = await queryBuilder
+        .where('verification.to = :to', { to })
+        .andWhere('verification.key = :key', { key })
+        .getOne();
+
+      if (!verify) {
+        throw new HttpException('올바른 인증 코드가 이닙니다.', 400);
+      }
+      return true;
+    } catch (error) {
+      throw new InternalServerErrorException();
     }
   }
 }
