@@ -22,7 +22,8 @@
       "@common/*": ["./src/common/*"],
       "@email-verification/*": ["./src/email-verification/*"],
       "@user/*": ["./src/user/*"],
-      "@verification/*": ["./src/verification/*"]
+      "@verification/*": ["./src/verification/*"],
+      "@board/*": ["./src/board/*"]
     }
   }
 }

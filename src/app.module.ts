@@ -10,6 +10,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { VerificationModule } from './verification/verification.module';
+import { BoardModule } from './board/board.module';
 
 const typeOrmModuleOptions = {
   useFactory: async (
@@ -22,9 +23,9 @@ const typeOrmModuleOptions = {
     username: configService.get('DB_USERNAME'),
     password: configService.get('DB_PASSWORD'),
     database: configService.get('DB_DATABASE'),
-    ssl: {
-      rejectUnauthorized: true,
-    },
+    // ssl: {
+    //   rejectUnauthorized: true,
+    // },
     entities: [Users, Verification],
     synchronize: true, // ! set 'false' in production
     autoLoadEntities: true,
@@ -68,6 +69,7 @@ const typeOrmModuleOptions = {
     AuthModule,
     UserModule,
     VerificationModule,
+    BoardModule,
     // EmailVerificationModule,
   ],
   controllers: [AppController],
