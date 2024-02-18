@@ -4,7 +4,7 @@ import { SmsRequestDto } from '@verification/dto/sms.request.dto';
 import { SmsVerifyDto } from '@verification/dto/sms.verify.dto';
 import { VerificationService } from '@verification/service/verification.service';
 
-@ApiTags('Verification')
+@ApiTags('Verification 관련')
 @Controller('verification')
 export class VerificationController {
   constructor(private readonly verificationService: VerificationService) {}

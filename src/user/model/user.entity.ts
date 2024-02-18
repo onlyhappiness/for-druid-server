@@ -1,3 +1,4 @@
+import { Board } from '@board/model/board.enttiy';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
 
@@ -5,6 +6,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -26,7 +28,7 @@ export class Users {
   updatedAt: Date;
 
   @ApiProperty({
-    example: LoginType,
+    example: 'SIGNNAME',
     description: '로그인 타입',
   })
   @IsNotEmpty()
@@ -76,4 +78,8 @@ export class Users {
   @IsString()
   @Column({ nullable: true })
   image?: string;
+
+  // 게시글
+  @OneToMany(() => Board, (board) => board.User)
+  Board: Board;
 }

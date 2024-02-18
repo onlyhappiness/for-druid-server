@@ -9,7 +9,7 @@ import { UpdateUserProfileDTO } from '@user/dto/update.userProfile.dto';
 import { Users } from '@user/model/user.entity';
 import { UserService } from '@user/service/user.service';
 
-@ApiTags('User')
+@ApiTags('User 관련')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -33,7 +33,7 @@ export class UserController {
     return await this.userService.checkUserBySignname(body.signname);
   }
 
-  @Post('check-phone')
+  @Post('/check-phone')
   @ApiOperation({ summary: '전화번호 체크' })
   @ApiBody({
     type: FindPhoneDTO,
