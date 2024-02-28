@@ -1,3 +1,4 @@
+import { Like } from '@like/model/like.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { Users } from '@user/model/user.entity';
 import { IsNotEmpty, IsString } from 'class-validator';
@@ -7,6 +8,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -37,4 +39,8 @@ export class Board {
   })
   @JoinColumn()
   User: Users;
+
+  // 좋아요
+  @OneToMany(() => Like, (like) => like.Board)
+  Like: Like;
 }

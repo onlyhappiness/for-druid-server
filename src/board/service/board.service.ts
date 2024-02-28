@@ -19,14 +19,34 @@ export class BoardService {
 
   /** 게시글 아이디로 찾기 */
   async findBoardById(boardId: number) {
-    const board = await this.boardRepository.findOne({
-      where: { id: boardId },
-    });
+    const queryBuilder = this.boardRepository.createQueryBuilder('b');
 
-    if (!board) {
-      throw new HttpException('존재하지 않는 게시글입니다.', 400);
+    try {
+      const board = await queryBuilder
+        .leftJoin('b.Like', 'like')
+        .loadRelationCountAndMap('b.likesCount', 'b.Like')
+        .where('b.id = :boardId', { boardId })
+        .getOne();
+
+      if (!board) {
+        throw new HttpException('존재하지 않는 게시글입니다.', 400);
+      }
+
+      return board;
+    } catch (error) {
+      console.log('error: ', error);
+      throw new InternalServerErrorException();
     }
-    return board;
+
+    // const board = await this.boardRepository.findOne({
+    //   where: { id: boardId },
+    //   relations: ['Like'],
+    // });
+
+    // if (!board) {
+    //   throw new HttpException('존재하지 않는 게시글입니다.', 400);
+    // }
+    // return board;
   }
 
   /** 게시글 리스트 조회 */
