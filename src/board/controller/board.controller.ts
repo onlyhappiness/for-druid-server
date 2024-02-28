@@ -1,6 +1,7 @@
 import { JwtAuthGuard } from '@auth/jwt/jwt.guard';
 import { CreateBoardDto } from '@board/dto/create.board.dto';
 import { CurrentUser } from '@common/decorators/user.decorator';
+import { LikeService } from '@like/service/like.service';
 import {
   Body,
   Controller,
@@ -26,21 +27,24 @@ import { BoardService } from '../service/board.service';
 @ApiTags('게시글 관련')
 @Controller('board')
 export class BoardController {
-  constructor(private readonly boardService: BoardService) {}
+  constructor(
+    private readonly boardService: BoardService,
+    private readonly likeService: LikeService,
+  ) {}
 
   @Get('')
   @ApiOperation({ summary: '게시글 리스트 조회' })
   @ApiQuery({
     name: 'page',
     required: true,
-    description: '1',
-    example: 1,
+    description: 'page',
+    // example: 1,
   })
   @ApiQuery({
     name: 'limit',
     required: true,
-    description: '10',
-    example: 10,
+    description: 'limit',
+    // example: 10,
   })
   async findBoardList(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
@@ -76,5 +80,20 @@ export class BoardController {
     @Body() body: CreateBoardDto,
   ) {
     return await this.boardService.createBoard(currentUser, body);
+  }
+
+  @Post('/like/:boardId')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @ApiParam({
+    name: 'boardId',
+    required: true,
+    description: '게시글 id',
+    type: 'number',
+  })
+  @ApiOperation({ summary: '게시글 좋아요' })
+  async boardLike(@CurrentUser() currentUser: Users) {
+    console.log('유저::: ', currentUser);
+    return await this.likeService.createLike(currentUser);
   }
 }
