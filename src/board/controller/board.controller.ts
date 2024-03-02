@@ -92,8 +92,10 @@ export class BoardController {
     type: 'number',
   })
   @ApiOperation({ summary: '게시글 좋아요' })
-  async boardLike(@CurrentUser() currentUser: Users) {
-    console.log('유저::: ', currentUser);
-    return await this.likeService.createLike(currentUser);
+  async boardLike(
+    @CurrentUser() currentUser: Users,
+    @Param('boardId') boardId: number,
+  ) {
+    return await this.likeService.createLike(currentUser, boardId);
   }
 }

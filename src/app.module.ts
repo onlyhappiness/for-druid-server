@@ -1,3 +1,7 @@
+import { BoardModule } from '@board/board.module';
+import { Board } from '@board/model/board.enttiy';
+import { LikeModule } from '@like/like.module';
+import { Like } from '@like/model/like.entity';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
@@ -8,10 +12,8 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { BoardModule } from './board/board.module';
 import { UserModule } from './user/user.module';
 import { VerificationModule } from './verification/verification.module';
-import { LikeModule } from './like/like.module';
 
 const typeOrmModuleOptions = {
   useFactory: async (
@@ -24,10 +26,10 @@ const typeOrmModuleOptions = {
     username: configService.get('DB_USERNAME'),
     password: configService.get('DB_PASSWORD'),
     database: configService.get('DB_DATABASE'),
-    ssl: {
-      rejectUnauthorized: true,
-    },
-    entities: [Users, Verification],
+    // ssl: {
+    //   rejectUnauthorized: true,
+    // },
+    entities: [Users, Verification, Board, Like],
     synchronize: true, // ! set 'false' in production
     autoLoadEntities: true,
     logging: true,

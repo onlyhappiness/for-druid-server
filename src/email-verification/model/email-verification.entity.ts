@@ -24,7 +24,7 @@ export class EmailVerification {
     description: '이메일',
   })
   @IsEmail()
-  @Column()
+  @Column({ type: 'varchar', comment: '이메일 ' })
   to: string;
 
   @ApiProperty({
@@ -32,7 +32,7 @@ export class EmailVerification {
     description: '인증코드',
   })
   @IsNumber()
-  @Column()
+  @Column({ type: 'int', comment: '인증코드' })
   code: number;
 
   @ApiProperty({
@@ -40,6 +40,6 @@ export class EmailVerification {
     description: '인증 시도 횟수',
   })
   @IsNumber()
-  @Column()
+  @Column({ type: 'int', comment: '인증 시도 횟수' })
   count: number;
 }

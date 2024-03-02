@@ -5,6 +5,9 @@ src/config
 /dist
 /node_modules
 
+.yarn
+.vscode
+
 # Logs
 logs
 *.log

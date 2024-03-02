@@ -26,18 +26,18 @@ export class Board {
 
   @ApiProperty({
     example: '',
-    description: '',
+    description: '내용',
   })
   @IsString()
   @IsNotEmpty()
-  @Column()
+  @Column({ type: 'varchar', comment: '내용' })
   description: string;
 
   // 유저
   @ManyToOne(() => Users, (user) => user.Board, {
     onDelete: 'SET NULL',
   })
-  @JoinColumn()
+  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   User: Users;
 
   // 좋아요

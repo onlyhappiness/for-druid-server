@@ -46,7 +46,7 @@ export class Users {
   })
   @IsString()
   @IsNotEmpty()
-  @Column()
+  @Column({ type: 'varchar', comment: '닉네임' })
   signname: string;
 
   // @ApiProperty({
@@ -64,7 +64,7 @@ export class Users {
   })
   @IsString()
   @IsNotEmpty()
-  @Column()
+  @Column({ type: 'varchar', comment: '전화번호' })
   phone: string;
 
   @ApiProperty({
@@ -73,11 +73,11 @@ export class Users {
   })
   @IsString()
   @IsNotEmpty()
-  @Column({ select: false })
+  @Column({ select: false, type: 'varchar', comment: '비밀번호' })
   password: string;
 
   @IsString()
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'varchar', comment: '이미지' })
   image?: string;
 
   // 게시글
