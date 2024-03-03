@@ -1,5 +1,6 @@
 import { JwtAuthGuard } from '@auth/jwt/jwt.guard';
 import { CreateBoardDto } from '@board/dto/create.board.dto';
+import { UpdateBoardDto } from '@board/dto/update.board.dto';
 import { CurrentUser } from '@common/decorators/user.decorator';
 import { LikeService } from '@like/service/like.service';
 import {
@@ -10,6 +11,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -67,7 +69,7 @@ export class BoardController {
     @CurrentUser() currentUser: Users,
     @Param('boardId') boardId: number,
   ) {
-    return await this.boardService.findBoardDetail(boardId);
+    return await this.boardService.findBoardDetail(currentUser, boardId);
   }
 
   @Post('')
@@ -97,5 +99,23 @@ export class BoardController {
     @Param('boardId') boardId: number,
   ) {
     return await this.likeService.createLike(currentUser, boardId);
+  }
+
+  @Put('/:boardId')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @ApiParam({
+    name: 'boardId',
+    required: true,
+    description: '게시글 id',
+    type: 'number',
+  })
+  @ApiOperation({ summary: '게시글 수정' })
+  async updateBoard(
+    @CurrentUser() currentUser: Users,
+    @Param('boardId') boardId: number,
+    @Body() body: UpdateBoardDto,
+  ) {
+    return await this.boardService.updateBoard(currentUser, body, boardId);
   }
 }

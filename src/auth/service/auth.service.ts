@@ -4,6 +4,7 @@ import {
   HttpException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -34,7 +35,7 @@ export class AuthService {
         .getOne();
 
       if (!user) {
-        throw new HttpException('해당 유저는 존재하지 않습니다.', 400);
+        throw new NotFoundException('해당 유저는 존재하지 않습니다.');
       }
       return user;
     } catch (error) {
