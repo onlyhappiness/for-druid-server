@@ -1,5 +1,4 @@
-import { Comment } from '@comment/model/comment.entity';
-import { Like } from '@like/model/like.entity';
+import { Board } from '@board/model/board.enttiy';
 import { ApiProperty } from '@nestjs/swagger';
 import { Users } from '@user/model/user.entity';
 import { IsNotEmpty, IsString } from 'class-validator';
@@ -9,13 +8,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'board' })
-export class Board {
+@Entity({ name: 'comment' })
+export class Comment {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -35,17 +33,16 @@ export class Board {
   content: string;
 
   // 유저
-  @ManyToOne(() => Users, (user) => user.Board, {
+  @ManyToOne(() => Users, (user) => user.Comment, {
     onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   User: Users;
 
-  // 좋아요
-  @OneToMany(() => Like, (like) => like.Board)
-  Like: Like;
-
   // 게시글
-  @OneToMany(() => Comment, (comment) => comment.Board)
-  Comment: Comment;
+  @ManyToOne(() => Board, (board) => board.Comment, {
+    onDelete: 'SET NULL',
+  })
+  @JoinColumn({ name: 'board_id', referencedColumnName: 'id' })
+  Board: Board;
 }

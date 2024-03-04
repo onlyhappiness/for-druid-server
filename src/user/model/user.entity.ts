@@ -1,4 +1,5 @@
 import { Board } from '@board/model/board.enttiy';
+import { Comment } from '@comment/model/comment.entity';
 import { Like } from '@like/model/like.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
@@ -87,4 +88,8 @@ export class Users {
   // 좋아요
   @OneToMany(() => Like, (like) => like.User)
   Like: Like;
+
+  // 댓글
+  @OneToMany(() => Comment, (comment) => comment.User)
+  Comment: Comment;
 }

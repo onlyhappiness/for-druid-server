@@ -8,5 +8,5 @@ export class UpdateBoardDto {
   })
   @IsNotEmpty()
   @IsString()
-  description: string;
+  content: string;
 }

@@ -1,5 +1,6 @@
 import { BoardModule } from '@board/board.module';
 import { Board } from '@board/model/board.enttiy';
+import { Comment } from '@comment/model/comment.entity';
 import { LikeModule } from '@like/like.module';
 import { Like } from '@like/model/like.entity';
 import { Module } from '@nestjs/common';
@@ -12,6 +13,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { CommentModule } from './comment/comment.module';
 import { UserModule } from './user/user.module';
 import { VerificationModule } from './verification/verification.module';
 
@@ -29,7 +31,7 @@ const typeOrmModuleOptions = {
     // ssl: {
     //   rejectUnauthorized: true,
     // },
-    entities: [Users, Verification, Board, Like],
+    entities: [Users, Verification, Board, Like, Comment],
     synchronize: true, // ! set 'false' in production
     autoLoadEntities: true,
     logging: true,
@@ -74,6 +76,8 @@ const typeOrmModuleOptions = {
     VerificationModule,
     BoardModule,
     LikeModule,
+    CommentModule,
+
     // EmailVerificationModule,
   ],
   controllers: [AppController],
