@@ -77,7 +77,8 @@ export class BoardService {
     try {
       const board = await queryBuilder
         .leftJoinAndSelect('b.User', 'user')
-        .loadRelationCountAndMap('b.likesCount', 'b.Like')
+        .loadRelationCountAndMap('b.likes_count', 'b.Like')
+        .loadRelationCountAndMap('b.comment_count', 'b.Comment')
         .skip(limit * (page - 1))
         .take(limit)
         .getMany();
@@ -101,7 +102,7 @@ export class BoardService {
 
     return {
       ...board,
-      likeCount,
+      like_count: likeCount,
       is_like: isLike,
     };
   }

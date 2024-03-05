@@ -28,9 +28,6 @@ const typeOrmModuleOptions = {
     username: configService.get('DB_USERNAME'),
     password: configService.get('DB_PASSWORD'),
     database: configService.get('DB_DATABASE'),
-    // ssl: {
-    //   rejectUnauthorized: true,
-    // },
     entities: [Users, Verification, Board, Like, Comment],
     synchronize: true, // ! set 'false' in production
     autoLoadEntities: true,
@@ -55,30 +52,12 @@ const typeOrmModuleOptions = {
       }),
     }),
     TypeOrmModule.forRootAsync(typeOrmModuleOptions),
-    // MailerModule.forRootAsync({
-    //   inject: [ConfigService],
-    //   useFactory: async (configService: ConfigService) => ({
-    //     transport: {
-    //       host: 'smtp.naver.com',
-    //       port: 587,
-    //       auth: {
-    //         user: configService.get('EMAIL_ADDRESS'),
-    //         pass: configService.get('EMAIL_PASSWORD'),
-    //       },
-    //     },
-    //     defaults: {
-    //       from: configService.get('EMAIL_ADDRESS'),
-    //     },
-    //   }),
-    // }),
     AuthModule,
     UserModule,
     VerificationModule,
     BoardModule,
     LikeModule,
     CommentModule,
-
-    // EmailVerificationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
