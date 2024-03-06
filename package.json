@@ -30,6 +30,7 @@
     "@nestjs/platform-express": "^10.3.3",
     "@nestjs/platform-socket.io": "^10.3.3",
     "@nestjs/swagger": "^7.3.0",
+    "@nestjs/throttler": "^5.1.2",
     "@nestjs/typeorm": "^10.0.2",
     "@nestjs/websockets": "^10.3.3",
     "aws-sdk": "^2.1568.0",

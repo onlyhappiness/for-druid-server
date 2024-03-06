@@ -38,6 +38,7 @@ const RAW_RUNTIME_STATE =
           ["@nestjs/schematics", "virtual:c95c9072806b9c5ffaa4afe2364252f4218cb31cc284609c981efd2ec85cde748520a18bcdc63bb5c842a2811f016afd22b8b42605abdd60b49641320e8ce282#npm:10.1.1"],\
           ["@nestjs/swagger", "virtual:c95c9072806b9c5ffaa4afe2364252f4218cb31cc284609c981efd2ec85cde748520a18bcdc63bb5c842a2811f016afd22b8b42605abdd60b49641320e8ce282#npm:7.3.0"],\
           ["@nestjs/testing", "virtual:c95c9072806b9c5ffaa4afe2364252f4218cb31cc284609c981efd2ec85cde748520a18bcdc63bb5c842a2811f016afd22b8b42605abdd60b49641320e8ce282#npm:10.3.3"],\
+          ["@nestjs/throttler", "virtual:c95c9072806b9c5ffaa4afe2364252f4218cb31cc284609c981efd2ec85cde748520a18bcdc63bb5c842a2811f016afd22b8b42605abdd60b49641320e8ce282#npm:5.1.2"],\
           ["@nestjs/typeorm", "virtual:c95c9072806b9c5ffaa4afe2364252f4218cb31cc284609c981efd2ec85cde748520a18bcdc63bb5c842a2811f016afd22b8b42605abdd60b49641320e8ce282#npm:10.0.2"],\
           ["@nestjs/websockets", "virtual:c95c9072806b9c5ffaa4afe2364252f4218cb31cc284609c981efd2ec85cde748520a18bcdc63bb5c842a2811f016afd22b8b42605abdd60b49641320e8ce282#npm:10.3.3"],\
           ["@types/bcrypt", "npm:5.0.2"],\
@@ -2056,6 +2057,36 @@ const RAW_RUNTIME_STATE =
           "@types/nestjs__core",\
           "@types/nestjs__microservices",\
           "@types/nestjs__platform-express"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@nestjs/throttler", [\
+      ["npm:5.1.2", {\
+        "packageLocation": "../../../../.yarn/berry/cache/@nestjs-throttler-npm-5.1.2-c422061925-10c0.zip/node_modules/@nestjs/throttler/",\
+        "packageDependencies": [\
+          ["@nestjs/throttler", "npm:5.1.2"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:c95c9072806b9c5ffaa4afe2364252f4218cb31cc284609c981efd2ec85cde748520a18bcdc63bb5c842a2811f016afd22b8b42605abdd60b49641320e8ce282#npm:5.1.2", {\
+        "packageLocation": "./.yarn/__virtual__/@nestjs-throttler-virtual-a5bde44104/5/.yarn/berry/cache/@nestjs-throttler-npm-5.1.2-c422061925-10c0.zip/node_modules/@nestjs/throttler/",\
+        "packageDependencies": [\
+          ["@nestjs/throttler", "virtual:c95c9072806b9c5ffaa4afe2364252f4218cb31cc284609c981efd2ec85cde748520a18bcdc63bb5c842a2811f016afd22b8b42605abdd60b49641320e8ce282#npm:5.1.2"],\
+          ["@nestjs/common", "virtual:c95c9072806b9c5ffaa4afe2364252f4218cb31cc284609c981efd2ec85cde748520a18bcdc63bb5c842a2811f016afd22b8b42605abdd60b49641320e8ce282#npm:10.3.3"],\
+          ["@nestjs/core", "virtual:c95c9072806b9c5ffaa4afe2364252f4218cb31cc284609c981efd2ec85cde748520a18bcdc63bb5c842a2811f016afd22b8b42605abdd60b49641320e8ce282#npm:10.3.3"],\
+          ["@types/nestjs__common", null],\
+          ["@types/nestjs__core", null],\
+          ["@types/reflect-metadata", null],\
+          ["reflect-metadata", "npm:0.2.1"]\
+        ],\
+        "packagePeers": [\
+          "@nestjs/common",\
+          "@nestjs/core",\
+          "@types/nestjs__common",\
+          "@types/nestjs__core",\
+          "@types/reflect-metadata",\
+          "reflect-metadata"\
         ],\
         "linkType": "HARD"\
       }]\
@@ -6002,6 +6033,7 @@ const RAW_RUNTIME_STATE =
           ["@nestjs/schematics", "virtual:c95c9072806b9c5ffaa4afe2364252f4218cb31cc284609c981efd2ec85cde748520a18bcdc63bb5c842a2811f016afd22b8b42605abdd60b49641320e8ce282#npm:10.1.1"],\
           ["@nestjs/swagger", "virtual:c95c9072806b9c5ffaa4afe2364252f4218cb31cc284609c981efd2ec85cde748520a18bcdc63bb5c842a2811f016afd22b8b42605abdd60b49641320e8ce282#npm:7.3.0"],\
           ["@nestjs/testing", "virtual:c95c9072806b9c5ffaa4afe2364252f4218cb31cc284609c981efd2ec85cde748520a18bcdc63bb5c842a2811f016afd22b8b42605abdd60b49641320e8ce282#npm:10.3.3"],\
+          ["@nestjs/throttler", "virtual:c95c9072806b9c5ffaa4afe2364252f4218cb31cc284609c981efd2ec85cde748520a18bcdc63bb5c842a2811f016afd22b8b42605abdd60b49641320e8ce282#npm:5.1.2"],\
           ["@nestjs/typeorm", "virtual:c95c9072806b9c5ffaa4afe2364252f4218cb31cc284609c981efd2ec85cde748520a18bcdc63bb5c842a2811f016afd22b8b42605abdd60b49641320e8ce282#npm:10.0.2"],\
           ["@nestjs/websockets", "virtual:c95c9072806b9c5ffaa4afe2364252f4218cb31cc284609c981efd2ec85cde748520a18bcdc63bb5c842a2811f016afd22b8b42605abdd60b49641320e8ce282#npm:10.3.3"],\
           ["@types/bcrypt", "npm:5.0.2"],\

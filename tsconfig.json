@@ -20,6 +20,7 @@
     "paths": {
       "@auth/*": ["./src/auth/*"],
       "@board/*": ["./src/board/*"],
+      "@board-report/*": ["./src/board-report/*"],
       "@comment/*": ["./src/comment/*"],
       "@common/*": ["./src/common/*"],
       "@email-verification/*": ["./src/email-verification/*"],

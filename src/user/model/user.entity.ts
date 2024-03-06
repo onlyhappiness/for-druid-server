@@ -1,3 +1,4 @@
+import { BoardReport } from '@board-report/model/board-report.entity';
 import { Board } from '@board/model/board.enttiy';
 import { Comment } from '@comment/model/comment.entity';
 import { Like } from '@like/model/like.entity';
@@ -92,4 +93,8 @@ export class Users {
   // 댓글
   @OneToMany(() => Comment, (comment) => comment.User)
   Comment: Comment;
+
+  // 게시글 신고
+  @OneToMany(() => BoardReport, (report) => report.User)
+  BoardReport: BoardReport;
 }

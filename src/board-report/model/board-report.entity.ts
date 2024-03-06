@@ -1,6 +1,4 @@
-import { BoardReport } from '@board-report/model/board-report.entity';
-import { Comment } from '@comment/model/comment.entity';
-import { Like } from '@like/model/like.entity';
+import { Board } from '@board/model/board.enttiy';
 import { ApiProperty } from '@nestjs/swagger';
 import { Users } from '@user/model/user.entity';
 import { IsNotEmpty, IsString } from 'class-validator';
@@ -10,13 +8,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'board' })
-export class Board {
+@Entity({ name: 'board-report' })
+export class BoardReport {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -35,22 +32,15 @@ export class Board {
   @Column({ type: 'varchar', comment: '내용' })
   content: string;
 
-  // 유저
-  @ManyToOne(() => Users, (user) => user.Board, {
+  @ManyToOne(() => Board, (board) => board.BoardReport, {
+    onDelete: 'SET NULL',
+  })
+  @JoinColumn({ name: 'board_id', referencedColumnName: 'id' })
+  Board: Board;
+
+  @ManyToOne(() => Users, (user) => user.BoardReport, {
     onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   User: Users;
-
-  // 좋아요
-  @OneToMany(() => Like, (like) => like.Board)
-  Like: Like;
-
-  // 댓글
-  @OneToMany(() => Comment, (comment) => comment.Board)
-  Comment: Comment;
-
-  // 신고
-  @OneToMany(() => BoardReport, (report) => report.Board)
-  BoardReport: BoardReport;
 }

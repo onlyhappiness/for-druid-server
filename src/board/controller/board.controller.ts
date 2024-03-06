@@ -2,6 +2,7 @@ import { JwtAuthGuard } from '@auth/jwt/jwt.guard';
 import { CreateBoardDto } from '@board/dto/create.board.dto';
 import { UpdateBoardDto } from '@board/dto/update.board.dto';
 import { CreateCommentDto } from '@comment/dto/create.comment.dto';
+import { UpdateCommentDto } from '@comment/dto/update.comment.dto';
 import { CommentService } from '@comment/service/comment.service';
 import { CurrentUser } from '@common/decorators/user.decorator';
 import { CreateLikeDto } from '@like/dto/create.like.dto';
@@ -102,6 +103,8 @@ export class BoardController {
     @Param('boardId') boardId: number,
     @Body() body: UpdateBoardDto,
   ) {
+    await this.boardService.findBoardByUser(currentUser.id, boardId);
+
     return await this.boardService.updateBoard(currentUser, body, boardId);
   }
 
@@ -119,7 +122,9 @@ export class BoardController {
     @CurrentUser() currentUser: Users,
     @Param('boardId') boardId: number,
   ) {
-    return await this.boardService.deleteBoard(currentUser, boardId);
+    await this.boardService.findBoardByUser(currentUser.id, boardId);
+
+    return await this.boardService.deleteBoard(boardId);
   }
 
   // 좋아요
@@ -147,7 +152,7 @@ export class BoardController {
 
   // 댓글
   @Get('/comment/:boardId')
-  @ApiOperation({ summary: '게시글 댓글 보기' })
+  @ApiOperation({ summary: '댓글 조회' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiParam({
@@ -157,16 +162,23 @@ export class BoardController {
     type: 'number',
   })
   @ApiQuery({
-    name: 'page',
-    required: true,
-    description: 'page',
+    name: 'cursor',
+    description: 'cursor',
   })
   @ApiQuery({
     name: 'limit',
     required: true,
     description: 'limit',
   })
-  async findComments() {}
+  async findComments(
+    @Query('cursor', new DefaultValuePipe(0), ParseIntPipe) cursor: number,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    @Param('boardId') boardId: number,
+  ) {
+    await this.boardService.findBoardById(boardId);
+
+    return await this.commentService.findComment(cursor, limit, boardId);
+  }
 
   @Post('/comment/:boardId')
   @ApiOperation({ summary: '댓글 달기' })
@@ -184,11 +196,34 @@ export class BoardController {
     @Body() body: CreateCommentDto,
     @Param('boardId') boardId: number,
   ) {
+    await this.boardService.findBoardById(boardId);
+
     return await this.commentService.createComment(currentUser, body, boardId);
   }
 
   @Put('/comment/:commentId')
   @ApiOperation({ summary: '댓글 수정' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @ApiBody({ type: UpdateCommentDto })
+  @ApiParam({
+    name: 'commentId',
+    required: true,
+    description: '댓글 id',
+    type: 'number',
+  })
+  async updateComment(
+    @CurrentUser() currnetUser: Users,
+    @Body() body: UpdateCommentDto,
+    @Param('commentId') commentId: number,
+  ) {
+    await this.commentService.findCommentById(commentId);
+
+    return this.commentService.updateComment(body, commentId);
+  }
+
+  @Delete('/comment/:commentId')
+  @ApiOperation({ summary: '댓글 삭제' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiParam({
@@ -197,5 +232,9 @@ export class BoardController {
     description: '댓글 id',
     type: 'number',
   })
-  async updateComment() {}
+  async deleteComment(@Param('commentId') commentId: number) {
+    await this.commentService.findCommentById(commentId);
+
+    return await this.commentService.deleteComment(commentId);
+  }
 }

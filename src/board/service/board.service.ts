@@ -27,10 +27,10 @@ export class BoardService {
     const board = await this.boardRepository.findOne({
       where: { id: boardId },
     });
-
     if (!board) {
       throw new NotFoundException('존재하지 않는 게시글입니다.');
     }
+
     return board;
   }
 
@@ -125,8 +125,6 @@ export class BoardService {
   async updateBoard(currentUser: Users, body: UpdateBoardDto, boardId: number) {
     const { id: userId } = currentUser;
 
-    await this.findBoardByUser(userId, boardId);
-
     const boardInfo = {
       User: userId,
       ...body,
@@ -138,11 +136,7 @@ export class BoardService {
   }
 
   /** 게시글 삭제 */
-  async deleteBoard(currentUser: Users, boardId: number) {
-    const { id: userId } = currentUser;
-
-    await this.findBoardByUser(boardId, userId);
-
+  async deleteBoard(boardId: number) {
     await this.boardRepository.delete({ id: boardId });
 
     return true;
