@@ -39,7 +39,7 @@ export class Verification {
     description: '수신 전화번호',
   })
   @IsString()
-  @Column()
+  @Column({ type: 'varchar', comment: '수신 전화번호' })
   to: string;
 
   //   @ApiProperty({
@@ -55,6 +55,6 @@ export class Verification {
     description: '인증 키',
   })
   @IsString()
-  @Column()
+  @Column({ type: 'varchar', comment: '인증 키' })
   key: string;
 }

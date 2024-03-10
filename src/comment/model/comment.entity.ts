@@ -1,6 +1,9 @@
 import { Board } from '@board/model/board.enttiy';
+import { ApiProperty } from '@nestjs/swagger';
 import { Users } from '@user/model/user.entity';
+import { IsNotEmpty, IsString } from 'class-validator';
 import {
+  Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
@@ -9,8 +12,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'like' })
-export class Like {
+@Entity({ name: 'comment' })
+export class Comment {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -20,15 +23,24 @@ export class Like {
   @UpdateDateColumn()
   updatedAt: Date;
 
+  @ApiProperty({
+    example: '',
+    description: '내용',
+  })
+  @IsString()
+  @IsNotEmpty()
+  @Column({ type: 'varchar', comment: '내용' })
+  content: string;
+
   // 유저
-  @ManyToOne(() => Users, (user) => user.Like, {
+  @ManyToOne(() => Users, (user) => user.Comment, {
     onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   User: Users;
 
   // 게시글
-  @ManyToOne(() => Board, (board) => board.Like, {
+  @ManyToOne(() => Board, (board) => board.Comment, {
     onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'board_id', referencedColumnName: 'id' })

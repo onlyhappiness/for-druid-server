@@ -19,12 +19,15 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@auth/*": ["./src/auth/*"],
+      "@aws/*": ["./src/aws/*"],
+      "@board/*": ["./src/board/*"],
+      "@board-report/*": ["./src/board-report/*"],
+      "@comment/*": ["./src/comment/*"],
       "@common/*": ["./src/common/*"],
       "@email-verification/*": ["./src/email-verification/*"],
       "@like/*": ["./src/like/*"],
       "@user/*": ["./src/user/*"],
-      "@verification/*": ["./src/verification/*"],
-      "@board/*": ["./src/board/*"]
+      "@verification/*": ["./src/verification/*"]
     }
   }
 }
