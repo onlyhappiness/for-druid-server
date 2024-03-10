@@ -19,6 +19,7 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@auth/*": ["./src/auth/*"],
+      "@aws/*": ["./src/aws/*"],
       "@board/*": ["./src/board/*"],
       "@board-report/*": ["./src/board-report/*"],
       "@comment/*": ["./src/comment/*"],

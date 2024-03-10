@@ -43,9 +43,9 @@ export class BoardController {
   @Get('')
   @ApiOperation({ summary: '게시글 리스트 조회' })
   @ApiQuery({
-    name: 'page',
-    required: true,
-    description: 'page',
+    name: 'cursor',
+    required: false,
+    description: 'cursor',
   })
   @ApiQuery({
     name: 'limit',
@@ -53,10 +53,10 @@ export class BoardController {
     description: 'limit',
   })
   async findBoardList(
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('cursor', new DefaultValuePipe(0), ParseIntPipe) cursor: number,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
   ) {
-    return await this.boardService.findBoardList(page, limit);
+    return await this.boardService.findBoardList(cursor, limit);
   }
 
   @Get('/:boardId')

@@ -59,7 +59,7 @@ export class CommentService {
         .where('comment.board_id = :boardId', { boardId })
         .andWhere(cursor ? 'comment.id > :cursor' : '0=0', { cursor })
         .orderBy('comment.id', 'ASC')
-        .take(limit)
+        .take(limit + 1)
         .getMany();
 
       let hasNextPage = false;

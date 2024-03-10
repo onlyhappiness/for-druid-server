@@ -71,7 +71,7 @@ export class BoardService {
   }
 
   /** 게시글 리스트 조회 */
-  async findBoardList(page, limit) {
+  async findBoardList(cursor, limit) {
     const queryBuilder = this.boardRepository.createQueryBuilder('b');
 
     try {
@@ -79,11 +79,21 @@ export class BoardService {
         .leftJoinAndSelect('b.User', 'user')
         .loadRelationCountAndMap('b.likes_count', 'b.Like')
         .loadRelationCountAndMap('b.comment_count', 'b.Comment')
-        .skip(limit * (page - 1))
-        .take(limit)
+        .orderBy('b.id', 'ASC')
+        .take(limit + 1)
+        .where(cursor ? 'b.id > :cursor' : '0=0', { cursor })
         .getMany();
 
-      return board;
+      let hasNextPage = false;
+      if (board.length > limit) {
+        hasNextPage = true;
+        board.pop();
+      }
+
+      return {
+        data: board,
+        hasNextPage,
+      };
     } catch (error) {
       throw new InternalServerErrorException();
     }

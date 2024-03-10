@@ -7,6 +7,7 @@ import * as Joi from 'joi';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { AwsModule } from './aws/aws.module';
 import { BoardReportModule } from './board-report/board-report.module';
 import { CommentModule } from './comment/comment.module';
 import { typeOrmModuleOptions } from './typeorm.config';
@@ -19,13 +20,13 @@ import { VerificationModule } from './verification/verification.module';
       isGlobal: true,
       validationSchema: Joi.object({
         PORT: Joi.number().default(4000),
-        JWT_ACCESS_TOKEN_EXPIRATION_TIME: Joi.string().required(),
-        JWT_ACESS_TOKEN_SECRET: Joi.string().required(),
         DB_HOST: Joi.string().required(),
         DB_PORT: Joi.number().required(),
         DB_USERNAME: Joi.string().required(),
         DB_PASSWORD: Joi.string().required(),
         DB_DATABASE: Joi.string().required(),
+        JWT_ACCESS_TOKEN_EXPIRATION_TIME: Joi.string().required(),
+        JWT_ACESS_TOKEN_SECRET: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRootAsync(typeOrmModuleOptions),
@@ -36,6 +37,7 @@ import { VerificationModule } from './verification/verification.module';
     BoardReportModule,
     LikeModule,
     CommentModule,
+    AwsModule,
     // ThrottlerModule.forRoot([{ ttl: 5000, limit: 5 }]),
   ],
   controllers: [AppController],
