@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateUserProfileDTO } from '@user/dto/update.userProfile.dto';
 import { Users } from '@user/model/user.entity';
 import { plainToInstance } from 'class-transformer';
+import { uploadFiles } from 'src/utils/aws';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -68,5 +69,10 @@ export class UserService {
     await this.userRepository.update({ id: userId }, updateProfile);
 
     return await this.authService.findUserById(userId);
+  }
+
+  /** test */
+  async test(images) {
+    return await uploadFiles(images);
   }
 }

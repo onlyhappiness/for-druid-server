@@ -1,5 +1,4 @@
 import { JwtAuthGuard } from '@auth/jwt/jwt.guard';
-import { AwsService } from '@aws/service/aws.service';
 import { CurrentUser } from '@common/decorators/user.decorator';
 import {
   Body,
@@ -12,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { S3Service } from '@s3/service/s3.service';
 // import { FindEmailDTO } from '@user/dto/find.email.dto';
 import { FindNicknameDTO } from '@user/dto/find.nickname.dto';
 import { FindPhoneDTO } from '@user/dto/find.phone.dto';
@@ -24,7 +24,7 @@ import { UserService } from '@user/service/user.service';
 export class UserController {
   constructor(
     private readonly userService: UserService,
-    private readonly awsService: AwsService,
+    private readonly s3Service: S3Service,
   ) {}
 
   /** @deprecated */
@@ -69,6 +69,8 @@ export class UserController {
   @Post('/test')
   @UseInterceptors(FilesInterceptor('images'))
   async uploadImage(@UploadedFiles() images) {
-    return await this.awsService.uploadFiles(images);
+    // console.log('images: ', images);
+    // return await this.userService.test(images);
+    return await this.s3Service.uploadFiles(images);
   }
 }
