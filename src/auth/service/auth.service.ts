@@ -32,6 +32,7 @@ export class AuthService {
     try {
       const user = await queryBuilder
         .where('user.id = :userId', { userId })
+        .leftJoinAndSelect('user.Image', 'image')
         .getOne();
 
       if (!user) {
@@ -43,6 +44,7 @@ export class AuthService {
     }
   }
 
+  /** 사용자 아이디 체크 */
   async findUserBySignname(signname: string) {
     const user = await this.userRepository.findOne({
       where: { signname },
@@ -55,33 +57,40 @@ export class AuthService {
     return user;
   }
 
-  /**
-   * @description
-   * 사용자 핸드폰번호 찾기
-   * 휴대폰번호를 param으로 받아 휴대폰번호가 맞는 유저를 반환합니다.
-   */
-  async findUserByPhone(phone: string) {
+  /** 사용자 핸드폰번호 체크 */
+  async checkUserByPhone(phone: string) {
     const user = await this.userRepository.findOne({
       where: { phone },
-      select: ['id', 'signname', 'createdAt', 'phone', 'password'],
     });
 
-    if (!user) {
-      throw new HttpException('휴대폰 번호을 다시 확인해주세요', 400);
+    if (user) {
+      throw new HttpException('이미 가입된 전화번호입니다.', 400);
     }
     return user;
   }
 
-  /**
-   * @description
-   * 회원가입
-   */
+  /** 사용자 아이디 중복체크 */
+  async checkUserBySignname(signname: string) {
+    const user = await this.userRepository.findOne({
+      where: { signname },
+    });
+
+    if (user) {
+      throw new HttpException('이미 사용중인 아이디입니다.', 400);
+    }
+    return user;
+  }
+
+  /** 회원가입 */
   async createUser(body: UserRegisterDTO) {
     // 소셜 로그인
     // 비밀번호 생성
 
     // 일반 로그인
+    await this.checkUserByPhone(body.phone);
+    await this.checkUserBySignname(body.signname);
     const hashedPassword = await bcrypt.hash(body.password, 12);
+
     const user = await this.userRepository.save({
       ...body,
       password: hashedPassword,

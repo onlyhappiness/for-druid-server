@@ -54,6 +54,7 @@ const RAW_RUNTIME_STATE =
           ["bcrypt", "npm:5.1.1"],\
           ["class-transformer", "npm:0.5.1"],\
           ["class-validator", "npm:0.14.1"],\
+          ["crypto", "npm:1.0.1"],\
           ["eslint", "npm:8.57.0"],\
           ["eslint-config-prettier", "virtual:c95c9072806b9c5ffaa4afe2364252f4218cb31cc284609c981efd2ec85cde748520a18bcdc63bb5c842a2811f016afd22b8b42605abdd60b49641320e8ce282#npm:9.1.0"],\
           ["eslint-plugin-prettier", "virtual:c95c9072806b9c5ffaa4afe2364252f4218cb31cc284609c981efd2ec85cde748520a18bcdc63bb5c842a2811f016afd22b8b42605abdd60b49641320e8ce282#npm:5.1.3"],\
@@ -4774,6 +4775,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["crypto", [\
+      ["npm:1.0.1", {\
+        "packageLocation": "../../../../.yarn/berry/cache/crypto-npm-1.0.1-7cb8e3dca6-10c0.zip/node_modules/crypto/",\
+        "packageDependencies": [\
+          ["crypto", "npm:1.0.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["css-select", [\
       ["npm:5.1.0", {\
         "packageLocation": "../../../../.yarn/berry/cache/css-select-npm-5.1.0-9365a79de5-10c0.zip/node_modules/css-select/",\
@@ -6049,6 +6059,7 @@ const RAW_RUNTIME_STATE =
           ["bcrypt", "npm:5.1.1"],\
           ["class-transformer", "npm:0.5.1"],\
           ["class-validator", "npm:0.14.1"],\
+          ["crypto", "npm:1.0.1"],\
           ["eslint", "npm:8.57.0"],\
           ["eslint-config-prettier", "virtual:c95c9072806b9c5ffaa4afe2364252f4218cb31cc284609c981efd2ec85cde748520a18bcdc63bb5c842a2811f016afd22b8b42605abdd60b49641320e8ce282#npm:9.1.0"],\
           ["eslint-plugin-prettier", "virtual:c95c9072806b9c5ffaa4afe2364252f4218cb31cc284609c981efd2ec85cde748520a18bcdc63bb5c842a2811f016afd22b8b42605abdd60b49641320e8ce282#npm:5.1.3"],\

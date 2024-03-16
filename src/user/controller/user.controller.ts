@@ -5,11 +5,11 @@ import {
   Controller,
   Post,
   Put,
-  UploadedFiles,
+  UploadedFile,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { FilesInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { S3Service } from '@s3/service/s3.service';
 // import { FindEmailDTO } from '@user/dto/find.email.dto';
@@ -67,10 +67,12 @@ export class UserController {
   }
 
   @Post('/test')
-  @UseInterceptors(FilesInterceptor('images'))
-  async uploadImage(@UploadedFiles() images) {
-    // console.log('images: ', images);
-    // return await this.userService.test(images);
-    return await this.s3Service.uploadFiles(images);
+  @UseInterceptors(FileInterceptor('image'))
+  async uploadImage(@UploadedFile() image) {
+    console.log('images: ', image);
+    // return await image;
+    return await this.userService.test(image);
   }
 }
+
+// return await this.s3Service.uploadFiles(images);

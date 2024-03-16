@@ -12,7 +12,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'board-report' })
+@Entity({ name: 'board_report' })
 export class BoardReport {
   @PrimaryGeneratedColumn()
   id: number;

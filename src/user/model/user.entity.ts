@@ -13,6 +13,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { UserImage } from './user-image.entity';
 
 export enum LoginType {
   SIGNNAME = 'SIGNNAME',
@@ -78,9 +79,17 @@ export class Users {
   @Column({ select: false, type: 'varchar', comment: '비밀번호' })
   password: string;
 
-  @IsString()
-  @Column({ nullable: true, type: 'varchar', comment: '이미지' })
-  image?: string;
+  // @IsString()
+  // @Column({
+  //   nullable: true,
+  //   type: 'varchar',
+  //   comment: '이미지',
+  //   default: 'https://druid-diary.s3.ap-northeast-2.amazonaws.com/logo',
+  // })
+  // image?: string;
+  // 이미지
+  @OneToMany(() => UserImage, (image) => image.User)
+  Image: UserImage;
 
   // 게시글
   @OneToMany(() => Board, (board) => board.User)
