@@ -7,27 +7,18 @@ import * as Joi from 'joi';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { AwsModule } from './aws/aws.module';
 import { BoardReportModule } from './board-report/board-report.module';
 import { CommentModule } from './comment/comment.module';
-import { typeOrmModuleOptions } from './typeorm.config';
+import { joiConfig, typeOrmModuleOptions } from './config';
 import { UserModule } from './user/user.module';
 import { VerificationModule } from './verification/verification.module';
+import { S3Module } from './s3/s3.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      validationSchema: Joi.object({
-        PORT: Joi.number().default(4000),
-        DB_HOST: Joi.string().required(),
-        DB_PORT: Joi.number().required(),
-        DB_USERNAME: Joi.string().required(),
-        DB_PASSWORD: Joi.string().required(),
-        DB_DATABASE: Joi.string().required(),
-        JWT_ACCESS_TOKEN_EXPIRATION_TIME: Joi.string().required(),
-        JWT_ACESS_TOKEN_SECRET: Joi.string().required(),
-      }),
+      validationSchema: Joi.object(joiConfig),
     }),
     TypeOrmModule.forRootAsync(typeOrmModuleOptions),
     AuthModule,
@@ -37,7 +28,7 @@ import { VerificationModule } from './verification/verification.module';
     BoardReportModule,
     LikeModule,
     CommentModule,
-    AwsModule,
+    S3Module,
     // ThrottlerModule.forRoot([{ ttl: 5000, limit: 5 }]),
   ],
   controllers: [AppController],

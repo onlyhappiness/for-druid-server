@@ -35,6 +35,9 @@ export class Board {
   @Column({ type: 'varchar', comment: '내용' })
   content: string;
 
+  @Column('text', { array: true, nullable: true, default: [] })
+  images?: string[];
+
   // 유저
   @ManyToOne(() => Users, (user) => user.Board, {
     onDelete: 'SET NULL',
