@@ -3,8 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -29,9 +28,6 @@ export class UserImage {
   @Column({ type: 'varchar' })
   url: string;
 
-  @ManyToOne(() => Users, (user) => user.Image, {
-    onDelete: 'SET NULL',
-  })
-  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
+  @OneToMany(() => Users, (user) => user.UserImage)
   User: Users;
 }

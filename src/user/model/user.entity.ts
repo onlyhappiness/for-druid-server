@@ -9,6 +9,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -79,17 +81,9 @@ export class Users {
   @Column({ select: false, type: 'varchar', comment: '비밀번호' })
   password: string;
 
-  // @IsString()
-  // @Column({
-  //   nullable: true,
-  //   type: 'varchar',
-  //   comment: '이미지',
-  //   default: 'https://druid-diary.s3.ap-northeast-2.amazonaws.com/logo',
-  // })
-  // image?: string;
-  // 이미지
-  @OneToMany(() => UserImage, (image) => image.User)
-  Image: UserImage;
+  // // 이미지
+  // @OneToMany(() => UserImage, (image) => image.User)
+  // Image: UserImage;
 
   // 게시글
   @OneToMany(() => Board, (board) => board.User)
@@ -106,4 +100,10 @@ export class Users {
   // 게시글 신고
   @OneToMany(() => BoardReport, (report) => report.User)
   BoardReport: BoardReport;
+
+  @ManyToOne(() => UserImage, (image) => image.User, {
+    onDelete: 'SET NULL',
+  })
+  @JoinColumn({ name: 'image_id', referencedColumnName: 'id' })
+  UserImage: UserImage;
 }

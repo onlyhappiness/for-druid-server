@@ -1,6 +1,7 @@
 import { CreateBoardDto } from '@board/dto/create.board.dto';
 import { UpdateBoardDto } from '@board/dto/update.board.dto';
 import { Board } from '@board/model/board.enttiy';
+import { Comment } from '@comment/model/comment.entity';
 import { Like } from '@like/model/like.entity';
 import {
   Injectable,
@@ -20,12 +21,16 @@ export class BoardService {
 
     @InjectRepository(Like)
     private readonly likeRepository: Repository<Like>,
+
+    @InjectRepository(Comment)
+    private readonly commentRepository: Repository<Comment>,
   ) {}
 
   /** 게시글 아이디로 찾기 */
   async findBoardById(boardId: number) {
     const board = await this.boardRepository.findOne({
       where: { id: boardId },
+      relations: ['User'],
     });
     if (!board) {
       throw new NotFoundException('존재하지 않는 게시글입니다.');
@@ -56,6 +61,17 @@ export class BoardService {
       .getCount();
 
     return countLikes;
+  }
+
+  /** 게시글의 좋아요 개수 조회 */
+  async countCommentForBoard(boardId: number) {
+    const queryBuilder = this.commentRepository.createQueryBuilder('comment');
+
+    const countComment = await queryBuilder
+      .where('comment.board_id = :boardId', { boardId })
+      .getCount();
+
+    return countComment;
   }
 
   /** 좋아요 상태 조회 */
@@ -109,11 +125,14 @@ export class BoardService {
     const likeCount = await this.countLikesForBoard(boardId);
     // 게시글 좋아요 여부
     const isLike = await this.isLikesForBoard(userId, boardId);
+    // 댓글 개수
+    const commentCount = await this.countLikesForBoard(boardId);
 
     return {
       ...board,
-      like_count: likeCount,
+      likes_count: likeCount,
       is_like: isLike,
+      comment_count: commentCount,
     };
   }
 
